@@ -1,9 +1,10 @@
 {
    "scripts": {
-    "dev": "node --watch src/server.js",
-    "start": "node src/server.js"
-  },
-  "dependencies": {
-    "express": "^5.2.1"
-  }
+      "dev": "node --watch src/server.js",
+      "start": "node src/server.js"
+   },
+   "dependencies": {
+      "better-sqlite3": "^12.6.2",
+      "express": "^5.2.1"
+   }
 }
