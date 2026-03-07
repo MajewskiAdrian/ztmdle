@@ -19,8 +19,8 @@ exports.getRoutesData = (req, res) => {
             res.json({message: "ids musi być array"});
         }
 
-        
-        const routesData = db.prepare(`SELECT * FROM trips WHERE id IN (${routesIDs.toString()})`).all();
+        const idsString = routesIDs.map(id => `'${id}'`).join(',');
+        const routesData = db.prepare(`SELECT * FROM trips WHERE id IN (${idsString})`).all();
         res.json(routesData);
     } catch (err) {
         res.status(500);
