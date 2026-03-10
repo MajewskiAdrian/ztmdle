@@ -9,8 +9,8 @@ app.use('/stops', stopsRoute);
 const routesFromStop = require('./routes/routesFromStop');
 app.use('/routesfromstop/:stopId', routesFromStop);
 
-const routesData = require('./routes/routesData');
-app.use('/routesdata', routesData);
+// const routesData = require('./routes/routesData');
+// app.use('/routesdata', routesData);
 
 const stopsFromRoute = require('./routes/stopsFromRoute');
 app.use('/stopsfromroute/:routeId/:tripId', stopsFromRoute)
