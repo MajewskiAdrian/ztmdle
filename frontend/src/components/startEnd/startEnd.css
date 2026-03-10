@@ -1,0 +1,13 @@
+.StartEnd {
+    margin: auto;
+    margin-top: 40px;
+    width: 40%;
+    height: 50px;
+    border: 2px solid var(--primary_red);
+    color: var(--white_text);
+    font-size: 30px;
+
+    display: flex;
+    justify-content: center;  /* horizontal center */
+    align-items: center;      /* vertical center */
+}
