@@ -6,7 +6,7 @@ exports.getRoutesFromStop = (req, res) => {
         res.json(routesFromStop);
     } catch (err) {
         res.status(500);
-        res.json({ message: "Błąd zapytania", err });
+        res.json({ message: "Błąd zapytania", error: err.message });
     }
 }
 
@@ -20,7 +20,8 @@ exports.getRoutesData = (req, res) => {
         }
 
         
-        const routesData = db.prepare(`SELECT * FROM trips WHERE id IN (${routesIDs.toString()})`).all();
+        const idsString = routesIDs.map(id => `'${id}'`).join(',');
+        const routesData = db.prepare(`SELECT * FROM trips WHERE id IN (${idsString})`).all();
         res.json(routesData);
     } catch (err) {
         res.status(500);

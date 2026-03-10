@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router({mergeParams: true}); ///dsadsaAAAAAAAAAAAAAAAAAA
+const router = express.Router({mergeParams: true});
 const routesController = require('../controllers/routesController');
 
 router.post('/', routesController.getRoutesData);
