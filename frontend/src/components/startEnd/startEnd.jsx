@@ -2,9 +2,9 @@ import './startEnd.css'
 import { useState, useEffect } from 'react'
 import { getStops } from '../../api/getStops'
 
-export default function StartEnd() {
-    const [Poczatkowy, setPoczatkowy] = useState('Dworzec Głowny');
-    const [Koncowy, setKoncowy] = useState('Swojska');
+export default function StartEnd({ onStartSet, currentStop, onCurrentStopSet }) {
+    const [Poczatkowy, setPoczatkowy] = useState(null);
+    const [Koncowy, setKoncowy] = useState(null);
 
     const [stops, setStops] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -12,7 +12,21 @@ export default function StartEnd() {
 
     useEffect(() => {
         getStops()
-            .then(setStops)
+            .then((data) => {
+                setStops(data)
+                const start = data[0] || null;
+                const end = data[1] || null;
+
+                setPoczatkowy(start)
+                setKoncowy(end)
+
+                if (onStartSet) {
+                    onStartSet(start)
+                }
+                if (!currentStop && onCurrentStopSet) {
+                    onCurrentStopSet(start)
+                }
+            })
             .catch((e) => setError(e.message))
             .finally(() => setLoading(false))
     }, []);
@@ -20,12 +34,19 @@ export default function StartEnd() {
     if (loading) return <p>Ładowanie...</p>
     if (error) return <p>Błąd: {error}</p>
 
+    // wyświetl: początkowy i końcowy
     return (
         <div className="StartEnd">
-            {stops.map((s) => (
-                <p key={s.stopId}>{s.stopName}</p>
-            ))}
-            <p>{Poczatkowy} - {Koncowy}</p>
+            <div className="stopSummary">
+                <p>
+                    {Poczatkowy ? `${Poczatkowy.stopName} ${Poczatkowy.stopCode || ''}`.trim() : ''}
+                    {' - '}
+                    {Koncowy ? `${Koncowy.stopName} ${Koncowy.stopCode || ''}`.trim() : ''}
+                </p>
+                <p className="currentStop">
+                    {currentStop ? `Bieżący przystanek: ${currentStop.stopName} ${currentStop.stopCode || ''}`.trim() : ''}
+                </p>
+            </div>
         </div>
     )
 }

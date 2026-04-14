@@ -27,3 +27,27 @@ exports.getStopsFromRoute = (req, res) => {
     }
     
 }
+
+exports.getStopsFromStop = (req, res) => {
+    try {
+        const stopsFromStop = db.prepare(`
+            SELECT DISTINCT s.stopId, s.stopCode, s.stopName
+            FROM stops AS s
+            INNER JOIN stopsintrip AS st2 ON s.stopId = st2.stopId
+            WHERE EXISTS (
+                SELECT 1
+                FROM stopsintrip AS st1
+                WHERE st1.stopId = ?
+                  AND st1.routeId = st2.routeId
+                  AND st1.tripId = st2.tripId
+            )
+            AND s.stopId != ?
+            ORDER BY s.stopName
+        `).all(req.params.stopId, req.params.stopId);
+
+        res.json(stopsFromStop);
+    } catch (err) {
+        res.status(500)
+        res.json({ message: "Błąd bazy danych", error: err.message })
+    }
+};
