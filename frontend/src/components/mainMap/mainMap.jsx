@@ -22,9 +22,6 @@ const availableDot = L.divIcon({
   iconAnchor: [6, 6],      // środek kropki
 });
 
-
-// 2. Potem przypisujemy ją jako domyślną
-
 export default function MainMap() {
     const positionCenter = [54.372, 18.62]; 
     const positionEnd = [54.372, 18.62]; 
