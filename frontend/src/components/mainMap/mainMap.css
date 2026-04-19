@@ -7,4 +7,29 @@
     border:var(--third_red) 2px solid;
     border-radius: 50px;
     background-color: var(--secondary_color);
+    overflow: hidden;
+}
+.leaflet-tile-pane {
+    filter: grayscale(20%) brightness(0.7);
+}
+.leaflet-container {
+    background-color: #242424 !important;
+}
+
+.end-dot {
+  background-color: #612ab8;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.current-dot {
+  background-color: #2ab849;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.available-dot {
+  background-color: #6161616c;
+  border: 1px solid white;
+  border-radius: 50%;
 }
