@@ -13,12 +13,12 @@ exports.getRandomStops = (req, res) => {
 exports.getStopsFromRoute = (req, res) => {
     try {
         const stopsFromRoute = db.prepare(`
-            SELECT stops.stopId, stops.stopCode, stops.stopName, stopsintrip.routeId, stopsintrip.stopSequence 
+            SELECT stops.stopId, stops.stopCode, stops.stopName, stops.stopLat, stops.stopLon, stopsintrip.routeId, stopsintrip.stopSequence 
             FROM stops 
             INNER JOIN stopsintrip ON stops.stopId=stopsintrip.stopId
-            WHERE stopsintrip.routeId = '${req.params.routeId}' AND stopsintrip.tripId = '${req.params.tripId}'
+            WHERE stopsintrip.routeId = ? AND stopsintrip.tripId = ?
             ORDER BY stopSequence
-            `).all();
+            `).all(req.params.routeId, req.params.tripId);
         
         res.send(stopsFromRoute);
     } catch (err) {
