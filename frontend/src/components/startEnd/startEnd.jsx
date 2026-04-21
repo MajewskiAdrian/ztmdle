@@ -2,9 +2,8 @@ import './startEnd.css'
 import { useState, useEffect } from 'react'
 import { getStops } from '../../api/getStops'
 
-export default function StartEnd({ onStartSet, currentStop, onCurrentStopSet }) {
+export default function StartEnd({ onStartSet, currentStop, onCurrentStopSet, Koncowy, setKoncowy }) {
     const [Poczatkowy, setPoczatkowy] = useState(null);
-    const [Koncowy, setKoncowy] = useState(null);
 
     const [stops, setStops] = useState([]);
     const [loading, setLoading] = useState(true);

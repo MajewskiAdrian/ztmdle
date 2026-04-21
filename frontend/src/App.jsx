@@ -5,8 +5,9 @@ import MainMap from './components/mainMap/mainMap.jsx';
 import AnwserBox from './components/anwserBox/anwserBox.jsx';
 import StartEnd from './components/startEnd/startEnd.jsx';
 function App() {
-  const [poczatkowy, setPoczatkowy] = useState(null)
-  const [currentStop, setCurrentStop] = useState(null)
+  const [poczatkowy, setPoczatkowy] = useState(null);
+  const [currentStop, setCurrentStop] = useState(null);
+  const [Koncowy, setKoncowy] = useState(null);
 
   return (
     <div className="App">
@@ -15,9 +16,10 @@ function App() {
         onStartSet={setPoczatkowy}
         currentStop={currentStop}
         onCurrentStopSet={setCurrentStop}
+        Koncowy={Koncowy} setKoncowy={setKoncowy}
       />
       <MainMap currentStop={currentStop} onCurrentStopSet={setCurrentStop}/>
-      <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} />
+      <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop}/>
     </div>
   )
 }
