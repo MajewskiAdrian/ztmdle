@@ -22,10 +22,11 @@ const availableDot = L.divIcon({
   iconAnchor: [6, 6],      // środek kropki
 });
 
-export default function MainMap() {
+export default function MainMap({currentStop, setCurrentStop}) {
     const positionCenter = [54.372, 18.62]; 
     const positionEnd = [54.372, 18.62]; 
-    const positionCurrent = [54.32, 18.62]; 
+    
+    const positionCurrent = currentStop ? [currentStop.stopLat, currentStop.stopLon] : null;
     const availableCurrent = [54.335, 18.62]; 
     return (
         <div className="MainMap">
@@ -46,18 +47,21 @@ export default function MainMap() {
                     </Tooltip>
                 </Marker>
 
+                {currentStop && 
                 <Marker position={positionCurrent} icon={currentDot}>
                     <Tooltip direction="top" offset={[0, -5]} opacity={1} permanent={false}>
-                        Aktualna pozycja
+                        {`${currentStop.stopName} ${currentStop.stopCode || ''}`.trim()}
                     </Tooltip>
                 </Marker>
-
+                }
+                
                 <Marker position={availableCurrent} icon={availableDot}>
                     <Tooltip direction="top" offset={[0, -5]} opacity={1} permanent={false}>
                         Dostępna pozycja
                     </Tooltip>
                 </Marker>
             </MapContainer>
+                {currentStop && console.log(currentStop)}
         </div>
     );
 }

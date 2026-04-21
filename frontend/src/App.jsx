@@ -16,7 +16,7 @@ function App() {
         currentStop={currentStop}
         onCurrentStopSet={setCurrentStop}
       />
-      <MainMap />
+      <MainMap currentStop={currentStop} onCurrentStopSet={setCurrentStop}/>
       <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} />
     </div>
   )
