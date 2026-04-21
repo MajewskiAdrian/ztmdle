@@ -18,7 +18,7 @@ function App() {
         onCurrentStopSet={setCurrentStop}
         Koncowy={Koncowy} setKoncowy={setKoncowy}
       />
-      <MainMap currentStop={currentStop} onCurrentStopSet={setCurrentStop}/>
+      <MainMap currentStop={currentStop} onCurrentStopSet={setCurrentStop} endStop={Koncowy} setEndStop={setKoncowy}/>
       <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop}/>
     </div>
   )

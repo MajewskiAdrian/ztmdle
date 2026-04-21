@@ -1,8 +1,9 @@
 import './mainMap.css'
 import { MapContainer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet';
+import React, { useState, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-
+import { getStopsFromRoute, getRoutesFromStop } from '../../api/getStops';
 
 const endDot = L.divIcon({
   className: 'end-dot', 
@@ -22,17 +23,16 @@ const availableDot = L.divIcon({
   iconAnchor: [6, 6],      // środek kropki
 });
 
-export default function MainMap({currentStop, setCurrentStop}) {
+export default function MainMap({currentStop, setCurrentStop, endStop, setEndStop}) {
     const positionCenter = [54.372, 18.62]; 
-    const positionEnd = [54.372, 18.62]; 
-    
+    const positionEnd = endStop ? [endStop.stopLat, endStop.stopLon] : null;
     const positionCurrent = currentStop ? [currentStop.stopLat, currentStop.stopLon] : null;
     const availableCurrent = [54.335, 18.62]; 
     return (
         <div className="MainMap">
             <MapContainer 
                 center={positionCenter} 
-                zoom={12} 
+                zoom={11} 
                 scrollWheelZoom={true}
                 style={{ height: "100%", width: "100%" }}
             >
@@ -40,12 +40,13 @@ export default function MainMap({currentStop, setCurrentStop}) {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-
+                {endStop && 
                 <Marker position={positionEnd} icon={endDot}>
                     <Tooltip direction="top" offset={[0, -5]} opacity={1} permanent={false}>
-                        Cel
+                        {`CEL: ${endStop.stopName} ${endStop.stopCode || ''}`.trim()}
                     </Tooltip>
                 </Marker>
+                }
 
                 {currentStop && 
                 <Marker position={positionCurrent} icon={currentDot}>
@@ -61,7 +62,6 @@ export default function MainMap({currentStop, setCurrentStop}) {
                     </Tooltip>
                 </Marker>
             </MapContainer>
-                {currentStop && console.log(currentStop)}
         </div>
     );
 }

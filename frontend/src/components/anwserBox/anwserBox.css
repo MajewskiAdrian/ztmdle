@@ -98,3 +98,28 @@ input:focus {
     box-shadow: none;
     border: none;
 }
+.route-selection-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.route-button {
+    padding: 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    min-width: 40px;
+    transition: background-color 0.2s ease;
+}
+
+.route-button:hover {
+    background-color: #555;
+}
+
+.route-button.active {
+    background-color: #ff0000;
+}

@@ -1,10 +1,14 @@
 import './anwserBox.css'
 import { useState, useEffect } from 'react'
-import { getStopsFromStop } from '../../api/getStops'
+import { getStopsFromRoute, getRoutesFromStop } from '../../api/getStops';
+
 
 export default function AnwserBox({ startStop, onSetCurrentStop }) {
+    const [routesList, setRoutesList] = useState([]);
     const [stopsList, setStopsList] = useState([]);
+    const [selectedRoute, setSelectedRoute] = useState(null);
     const [selectedStop, setSelectedStop] = useState(null);
+    
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -12,43 +16,58 @@ export default function AnwserBox({ startStop, onSetCurrentStop }) {
     useEffect(() => {
         if (!startStop) return;
 
-        let cancelled = false;
-        const fetchData = async () => {
+        const fetchRoutes = async () => {
             setLoading(true);
-            setError('');
-            setStopsList([]);
-            setSelectedStop(null);
-
             try {
-                const stopsFromStop = await getStopsFromStop(startStop.stopId);
-                if (!cancelled) {
-                    setStopsList(stopsFromStop);
-                    setSelectedStop(stopsFromStop[0] || null);
-                }
+                const routes = await getRoutesFromStop(startStop.stopId);
+                // console.log("Przyst:", startStop.stopName);
+                // console.table(routes); 
+                setRoutesList(routes);
+                setStopsList([]);
+                setSelectedRoute(null);
             } catch (e) {
-                if (!cancelled) {
-                    setError(e.message);
-                }
+                setError("Błąd tras: " + e.message);
             } finally {
-                if (!cancelled) {
-                    setLoading(false);
-                }
+                setLoading(false);
             }
         };
-        fetchData();
+        fetchRoutes();
+    }, [startStop]);// ważne, bo to tak naprawde jest currentStop z app.jsx tylko ktoś to tak nazwał XD
 
-        return () => {
-            cancelled = true;
+    useEffect(() => {
+        if (!selectedRoute) return;
+
+        const fetchStops = async () => {
+            try {
+                const stops = await getStopsFromRoute(selectedRoute.routeId, selectedRoute.tripId);
+                // console.log(`id: ${selectedRoute.routeId}`);
+                // console.table(stops);
+                
+                setStopsList(stops);// Stąd później wypisać na mapie punkty
+                setSelectedStop(stops[0] || null);
+            } catch (e) {
+                console.error("Błąd przystanków trasy:", e.message);
+            }
         };
-    }, [startStop]);
+        fetchStops();
+    }, [selectedRoute]);
 
     if (!startStop || loading) return <div className="AnwserBox"><p>Ładowanie...</p></div>;
     if (error) return <div className="AnwserBox"><p>Błąd: {error}</p></div>;
 
     return (
         <div className="AnwserBox">
-            <h4>Wybierz przystanek docelowy:</h4>
+            <h4>Wybierz linię:</h4>
+            <div className="route-selection-container">
+                {routesList.map((route, index) => (
+                <button key={index} className={`route-button ${selectedRoute === route ? 'active' : ''}`} onClick={() => setSelectedRoute(route)}>
+                    {index + 1}
+                </button>
+                ))}
+            </div>
+        {selectedRoute && (
             <div className="list">
+                <h4>Wybierz przystanek</h4>
                 <div className="dropdownRow">
                     <button
                         type="button"
@@ -67,7 +86,8 @@ export default function AnwserBox({ startStop, onSetCurrentStop }) {
                         className="okButton"
                         onClick={() => {
                             if (selectedStop && onSetCurrentStop) {
-                                onSetCurrentStop(selectedStop)
+                                onSetCurrentStop(selectedStop);
+                                setSelectedRoute(null);
                             }
                         }}
                     >
@@ -75,7 +95,7 @@ export default function AnwserBox({ startStop, onSetCurrentStop }) {
                     </button>
                 </div>
                 {dropdownOpen && (
-                    <div className="options">
+                    <div className="options" >
                         {stopsList.map((stop) => (
                             <div
                                 key={stop.stopId}
@@ -91,6 +111,7 @@ export default function AnwserBox({ startStop, onSetCurrentStop }) {
                     </div>
                 )}
             </div>
+        )}
         </div>
     );
 }

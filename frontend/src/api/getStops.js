@@ -21,3 +21,19 @@ export async function getStopsFromStop(stopId) {
     }
     return res.json();
 }
+
+export async function getRoutesFromStop(stopId) {
+    const res = await fetch(`http://localhost:3000/routesfromstop/${stopId}`)
+    if (!res.ok) {
+        throw new Error('Nie udało się pobrać tras dostępnych z przystanku');
+    }
+    return res.json();
+}
+
+export async function getStopsFromRoute(routeId, tripId) {
+    const res = await fetch(`http://localhost:3000/stopsfromroute/${routeId}/${tripId}`)
+    if (!res.ok) {
+        throw new Error('Nie udało się pobrać przystanków z trasy');
+    }
+    return res.json();
+}
