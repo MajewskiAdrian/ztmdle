@@ -59,6 +59,13 @@
 
 ---
 
+## guzik w app.jsx wywalic - jak bedzie lpeiej dzialac stronas
+
 ## TODO
 
 - [ ] Dodać mapę do komponentu `MainMap` - wizualizacja tras i przystanków
+
+## Przejscie z przystanku Tramwaj-Autobus
+
+- Albo sie odrazu wszsytkie mozwlwe beda sie wyswietlac albo 
+mozliwosc przejscia z np swojskiej autobusowej na swojska tramwaja

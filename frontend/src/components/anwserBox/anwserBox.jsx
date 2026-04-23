@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { getStopsFromRoute, getRoutesFromStop } from '../../api/getStops';
 
 
-export default function AnwserBox({ startStop, onSetCurrentStop }) {
+export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, setRouteCount }) {
     const [routesList, setRoutesList] = useState([]);
     const [stopsList, setStopsList] = useState([]);
     const [selectedRoute, setSelectedRoute] = useState(null);
@@ -61,7 +61,7 @@ export default function AnwserBox({ startStop, onSetCurrentStop }) {
             <div className="route-selection-container">
                 {routesList.map((route, index) => (
                 <button key={index} className={`route-button ${selectedRoute === route ? 'active' : ''}`} onClick={() => setSelectedRoute(route)}>
-                    {index + 1}
+                    {route.routeId}
                 </button>
                 ))}
             </div>
@@ -87,6 +87,7 @@ export default function AnwserBox({ startStop, onSetCurrentStop }) {
                         onClick={() => {
                             if (selectedStop && onSetCurrentStop) {
                                 onSetCurrentStop(selectedStop);
+                                setRouteCount(routeCount + 1);
                                 setSelectedRoute(null);
                             }
                         }}
