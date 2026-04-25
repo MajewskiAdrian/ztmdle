@@ -23,7 +23,7 @@ function App() {
         Koncowy={Koncowy} setKoncowy={setKoncowy}
       />
       <div style={{ display: 'flex', justifyContent: 'center', margin: '20px', marginTop: '30px', gap: '20px' }}>
-        <MainMap currentStop={currentStop} setCurrentStop={setCurrentStop} endStop={Koncowy} setEndStop={setKoncowy} />
+        <MainMap currentStop={currentStop} startStop={poczatkowy} endStop={Koncowy}/>
         <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} routeCount={routeCount} setRouteCount={setRouteCount} />
       </div>
 

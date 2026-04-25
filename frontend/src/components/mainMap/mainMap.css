@@ -22,13 +22,13 @@
 }
 
 .current-dot {
-  background-color: #2ab849;
+  background-color: #f9b14c;
   border: 2px solid white;
   border-radius: 50%;
 }
 
-.available-dot {
-  background-color: #6161616c;
-  border: 1px solid white;
+.start-dot {
+  background-color: #2ab849;
+  border: 2px solid white;
   border-radius: 50%;
 }

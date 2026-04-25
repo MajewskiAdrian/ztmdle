@@ -17,17 +17,17 @@ const currentDot = L.divIcon({
   iconAnchor: [6, 6],      // środek kropki
 });
 
-const availableDot = L.divIcon({
-  className: 'available-dot', 
+const startDot = L.divIcon({
+  className: 'start-dot', 
   iconSize: [12, 12],      // rozmiar
   iconAnchor: [6, 6],      // środek kropki
 });
 
-export default function MainMap({currentStop, setCurrentStop, endStop, setEndStop}) {
+export default function MainMap({currentStop, startStop, endStop}) {
     const positionCenter = [54.372, 18.62]; 
     const positionEnd = endStop ? [endStop.stopLat, endStop.stopLon] : null;
     const positionCurrent = currentStop ? [currentStop.stopLat, currentStop.stopLon] : null;
-    const availableCurrent = [54.335, 18.62]; 
+    const positionStart = startStop ? [startStop.stopLat, startStop.stopLon] : null; 
     return (
         <div className="MainMap">
             <MapContainer 
@@ -40,6 +40,13 @@ export default function MainMap({currentStop, setCurrentStop, endStop, setEndSto
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+                {startStop &&
+                <Marker position={positionStart} icon={startDot}>
+                    <Tooltip direction="top" offset={[0, -5]} opacity={1} permanent={false}>
+                        {`START: ${startStop.stopName} ${startStop.stopCode || ''}`.trim()}
+                    </Tooltip>
+                </Marker>}
+
                 {endStop && 
                 <Marker position={positionEnd} icon={endDot}>
                     <Tooltip direction="top" offset={[0, -5]} opacity={1} permanent={false}>
@@ -56,11 +63,7 @@ export default function MainMap({currentStop, setCurrentStop, endStop, setEndSto
                 </Marker>
                 }
                 
-                <Marker position={availableCurrent} icon={availableDot}>
-                    <Tooltip direction="top" offset={[0, -5]} opacity={1} permanent={false}>
-                        Dostępna pozycja
-                    </Tooltip>
-                </Marker>
+                
             </MapContainer>
         </div>
     );

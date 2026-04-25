@@ -15,7 +15,7 @@ export const useGameWinLogic = (currentStop, endStop, routeCount) => {
         <div className="overlay"></div>
         <div className="win-message">
           Gratulacje, wygrałeś!
-          <p>Liczba tras: {routeCount}</p>
+          <p>Liczba przesiadek: {routeCount}</p>
           <button className="close-btn" onClick={() => setShowWinMessage(false)}>X</button>
         </div>
       </>
