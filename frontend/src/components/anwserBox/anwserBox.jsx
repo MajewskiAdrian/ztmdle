@@ -8,7 +8,8 @@ export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, set
     const [stopsList, setStopsList] = useState([]);
     const [selectedRoute, setSelectedRoute] = useState(null);
     const [selectedStop, setSelectedStop] = useState(null);
-    
+    const [stopSequenceInRoute, setStopSequenceInRoute] = useState(null);
+
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -40,17 +41,30 @@ export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, set
         const fetchStops = async () => {
             try {
                 const stops = await getStopsFromRoute(selectedRoute.routeId, selectedRoute.tripId);
-                // console.log(`id: ${selectedRoute.routeId}`);
-                // console.table(stops);
-                
-                setStopsList(stops);// Stąd później wypisać na mapie punkty
-                setSelectedStop(stops[0] || null);
+
+                const currentStopInRoute = stops.find(
+                    (stop) => stop.stopId == startStop.stopId
+                );
+
+                const currentSequence = currentStopInRoute
+                    ? Number(currentStopInRoute.stopSequence)
+                    : null;
+
+                const availableStops = stops.filter(
+                    (stop) =>
+                        currentSequence == null ||
+                        Number(stop.stopSequence) > currentSequence
+                );
+
+                setStopsList(availableStops);
+                setStopSequenceInRoute(currentSequence);
+                setSelectedStop(availableStops[0] || null);
             } catch (e) {
                 console.error("Błąd przystanków trasy:", e.message);
             }
         };
         fetchStops();
-    }, [selectedRoute]);
+    }, [selectedRoute, startStop]);
 
     if (!startStop || loading) return <div className="AnwserBox"><p>Ładowanie...</p></div>;
     if (error) return <div className="AnwserBox"><p>Błąd: {error}</p></div>;
@@ -60,59 +74,60 @@ export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, set
             <h4>Wybierz linię:</h4>
             <div className="route-selection-container">
                 {routesList.map((route, index) => (
-                <button key={index} className={`route-button ${selectedRoute === route ? 'active' : ''}`} onClick={() => setSelectedRoute(route)}>
-                    {route.routeId}
-                </button>
+                    <button key={index} className={`route-button ${selectedRoute === route ? 'active' : ''}`} onClick={() => setSelectedRoute(route)}>
+                        {route.routeId}
+                    </button>
                 ))}
             </div>
-        {selectedRoute && (
-            <div className="list">
-                <h4>Wybierz przystanek</h4>
-                <div className="dropdownRow">
-                    <button
-                        type="button"
-                        className="dropdownToggle"
-                        onClick={() => setDropdownOpen((prev) => !prev)}
-                    >
-                        <span>
-                            {selectedStop
-                                ? `${selectedStop.stopName} (${selectedStop.stopCode})`
-                                : 'Wybierz przystanek'}
-                        </span>
-                        <span className={`arrow ${dropdownOpen ? 'open' : ''}`}>▾</span>
-                    </button>
-                    <button
-                        type="button"
-                        className="okButton"
-                        onClick={() => {
-                            if (selectedStop && onSetCurrentStop) {
-                                onSetCurrentStop(selectedStop);
-                                setRouteCount(routeCount + 1);
-                                setSelectedRoute(null);
-                            }
-                        }}
-                    >
-                        Ok
-                    </button>
-                </div>
-                {dropdownOpen && (
-                    <div className="options" >
-                        {stopsList.map((stop) => (
-                            <div
-                                key={stop.stopId}
-                                className="option"
-                                onClick={() => {
-                                    setSelectedStop(stop);
-                                    setDropdownOpen(false);
-                                }}
-                            >
-                                {stop.stopName} ({stop.stopCode})
-                            </div>
-                        ))}
+            {selectedRoute && (
+                <div className="list">
+                    <h4>Wybierz przystanek</h4>
+                    <div className="dropdownRow">
+                        <button
+                            type="button"
+                            className="dropdownToggle"
+                            onClick={() => setDropdownOpen((prev) => !prev)}
+                        >
+                            <span>
+                                {selectedStop
+                                    ? `${selectedStop.stopName} (${selectedStop.stopCode})`
+                                    : 'Wybierz przystanek'}
+                            </span>
+                            <span className={`arrow ${dropdownOpen ? 'open' : ''}`}>▾</span>
+                        </button>
+                        <button
+                            type="button"
+                            className="okButton"
+                            onClick={() => {
+                                if (selectedStop && onSetCurrentStop) {
+                                    onSetCurrentStop(selectedStop);
+                                    setRouteCount(routeCount + 1);
+                                    setSelectedRoute(null);
+
+                                }
+                            }}
+                        >
+                            Ok
+                        </button>
                     </div>
-                )}
-            </div>
-        )}
+                    {dropdownOpen && (
+                        <div className="options" >
+                            {stopsList.map((stop) => (
+                                <div
+                                    key={stop.stopId}
+                                    className="option"
+                                    onClick={() => {
+                                        setSelectedStop(stop);
+                                        setDropdownOpen(false);
+                                    }}
+                                >
+                                    {stop.stopName} ({stop.stopCode})
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 }
