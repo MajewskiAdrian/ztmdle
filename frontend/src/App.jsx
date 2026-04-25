@@ -22,8 +22,11 @@ function App() {
         onCurrentStopSet={setCurrentStop}
         Koncowy={Koncowy} setKoncowy={setKoncowy}
       />
-      <MainMap currentStop={currentStop} setCurrentStop={setCurrentStop} endStop={Koncowy} setEndStop={setKoncowy}/>
-      <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} routeCount={routeCount} setRouteCount={setRouteCount}/>
+      <div style={{ display: 'flex', justifyContent: 'center', margin: '20px', marginTop: '30px', gap: '20px' }}>
+        <MainMap currentStop={currentStop} setCurrentStop={setCurrentStop} endStop={Koncowy} setEndStop={setKoncowy} />
+        <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} routeCount={routeCount} setRouteCount={setRouteCount} />
+      </div>
+
       {
 
         //Guzik do wypierdolenia ale narazie jest bo przystanki nie dzialaja

@@ -1,14 +1,13 @@
 .MainMap{
-    margin:auto;
     text-align: center;
-    margin-top: 30px;
-    width: 35%;
+    width: 50%;
     height: 600px;
     border:var(--third_red) 2px solid;
-    border-radius: 50px;
+    border-radius: 12px;
     background-color: var(--secondary_color);
     overflow: hidden;
 }
+
 .leaflet-tile-pane {
     filter: grayscale(20%) brightness(0.7);
 }
