@@ -2,7 +2,8 @@ db = require('../config/dbconnection');
 
 exports.getRandomStops = (req, res) => {
     try {
-        const randomStops = db.prepare('SELECT * FROM stops ORDER BY RANDOM() LIMIT 2').all();
+        // Dla uproszczenia, wybieramy tylko przystanki z Gdańska (zoneId=1).
+        const randomStops = db.prepare(`SELECT * FROM stops WHERE zoneId=1 ORDER BY RANDOM() LIMIT 2`).all(); 
         res.json(randomStops);
     } catch (err) {
         res.status(500)
