@@ -6,7 +6,8 @@ exports.getRoutesFromStop = (req, res) => {
             SELECT stopsintrip.routeId, stopsintrip.tripId
             FROM stopsintrip 
             INNER JOIN stops ON stopsintrip.stopId=stops.stopId
-            WHERE stopsintrip.stopId = ?;
+            INNER JOIN trips ON stopsintrip.routeId=trips.routeId AND stopsintrip.tripId=trips.tripId
+            WHERE stopsintrip.stopId = ? AND trips.type='MAIN';
             `).all(req.params.stopId);
 
         res.json(routesFromStop);
