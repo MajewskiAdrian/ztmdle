@@ -1,34 +1,38 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import './index.css'
+import Header from './components/Header/Header.jsx';
+import MainMap from './components/mainMap/mainMap.jsx';
+import AnwserBox from './components/anwserBox/anwserBox.jsx';
+import StartEnd from './components/startEnd/startEnd.jsx';
+import { useGameWinLogic } from './hooks/useGameWinLogic.jsx';
 function App() {
-  const [count, setCount] = useState(0)
+  const [poczatkowy, setPoczatkowy] = useState(null);
+  const [currentStop, setCurrentStop] = useState(null);
+  const [Koncowy, setKoncowy] = useState(null);
+  const [routeCount, setRouteCount] = useState(0);
+  const [showWinMessage, setShowWinMessage, WinMessage] = useGameWinLogic(currentStop, Koncowy, routeCount);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="App">
+      <WinMessage />
+      <Header />
+      <StartEnd
+        onStartSet={setPoczatkowy}
+        currentStop={currentStop}
+        onCurrentStopSet={setCurrentStop}
+        Koncowy={Koncowy} setKoncowy={setKoncowy}
+      />
+      <div style={{ display: 'flex', justifyContent: 'center', margin: '20px', marginTop: '30px', gap: '20px' }}>
+        <MainMap currentStop={currentStop} startStop={poczatkowy} endStop={Koncowy}/>
+        <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} routeCount={routeCount} setRouteCount={setRouteCount} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+      {
+
+        //Guzik do wypierdolenia ale narazie jest bo przystanki nie dzialaja
+      }
+      <button onClick={() => setCurrentStop(Koncowy)}>Test: Set to End Stop</button>
+    </div>
   )
 }
 

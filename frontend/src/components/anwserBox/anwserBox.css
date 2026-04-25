@@ -1,0 +1,123 @@
+.AnwserBox{
+    width: 40%;
+    padding: 18px;
+    background-color: var(--secondary_color);
+    border: 2px solid var(--primary_red);
+    border-radius: 12px;
+    align-self: top;
+}
+.AnwserBox h4 {
+    margin: 0 0 12px;
+    color: var(--white_text);
+    font-size: 18px;
+    font-weight: 600;
+}
+.list {
+    position: relative;
+    background-color: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 10px;
+}
+.dropdownRow {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.dropdownToggle {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background-color: transparent;
+    color: var(--white_text);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.okButton {
+    min-width: 70px;
+    padding: 10px 14px;
+    background-color: rgba(251,45,55,0.9);
+    color: var(--white_text);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+.okButton:hover {
+    background-color: rgba(251,45,55,1);
+}
+.dropdownToggle:hover {
+    background-color: rgba(255,255,255,0.08);
+}
+.arrow {
+    transition: transform 0.2s ease;
+}
+.arrow.open {
+    transform: rotate(180deg);
+}
+.options {
+    position: absolute;
+    z-index: 20;
+    left: 0;
+    right: 0;
+    margin-top: 10px;
+    max-height: 45vh;
+    overflow-y: auto;
+    background-color: var(--secondary_color);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+.option {
+    padding: 10px 12px;
+    color: var(--white_text);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+.option:hover {
+    background-color: rgba(255,255,255,0.08);
+}
+
+input{
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    color:var(--white_text);
+    border:none;
+    font-size: 20px;
+    font-weight: bold;
+}
+input:focus {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+.route-selection-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.route-button {
+    padding: 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    min-width: 40px;
+    transition: background-color 0.2s ease;
+}
+
+.route-button:hover {
+    background-color: #555;
+}
+
+.route-button.active {
+    background-color: #ff0000;
+}

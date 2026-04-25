@@ -1,0 +1,28 @@
+.StartEnd {
+    margin: auto;
+    margin-top: 40px;
+    width: 40%;
+    min-height: 70px;
+    border: 2px solid var(--primary_red);
+    border-radius: 12px;
+    color: var(--white_text);
+    font-size: 30px;
+    padding: 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.stopSummary {
+    width: 100%;
+}
+.stopSummary p {
+    margin: 0;
+}
+.currentStop {
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--white_text);
+}
