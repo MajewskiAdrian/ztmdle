@@ -4,7 +4,7 @@ import Header from './components/Header/Header.jsx';
 import MainMap from './components/mainMap/mainMap.jsx';
 import AnwserBox from './components/anwserBox/anwserBox.jsx';
 import StartEnd from './components/startEnd/startEnd.jsx';
-import CurrentStopContainer from './components/currentStopContainer.jsx';
+import CurrentStopContainer from './components/CurrentStopContainer.jsx';
 import { useGameWinLogic } from './hooks/useGameWinLogic.jsx';
 function App() {
   const [poczatkowy, setPoczatkowy] = useState(null);
@@ -28,7 +28,7 @@ function App() {
             Koncowy={Koncowy}
             setKoncowy={setKoncowy}
           />
-<AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} routeCount={routeCount} setRouteCount={setRouteCount} />
+          <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} routeCount={routeCount} setRouteCount={setRouteCount} />
           <MainMap currentStop={currentStop} startStop={poczatkowy} endStop={Koncowy} />
         </div>
 

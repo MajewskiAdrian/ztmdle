@@ -32,7 +32,7 @@ exports.getStopsFromRoute = (req, res) => {
 // Możliwe przystanki do przejścia (na pieszo) max 150m
 exports.getStopsFromStop = (req, res) => {
     try {
-        const r = 6371; // promień ziemi w km
+        const r = 6371000; // promień ziemi w m
         const p = Math.PI / 180;
         const distance = 150; // m
 
@@ -50,7 +50,7 @@ exports.getStopsFromStop = (req, res) => {
         const maxLon = req.params.stopLon + marginLon;
 
         const stopsFromStop = db.prepare(`
-            SELECT stopId, stopCode, stopName, zoneId, stopLat, stopLon, type, (2 * ${r} * asin(sqrt(A))) AS distance
+            SELECT stopId, stopCode, stopName, zoneId, stopLat, stopLon, type, round((2 * ${r} * asin(sqrt(A)))) AS distance
             FROM (
                 SELECT stopId, stopCode, stopName, zoneId, stopLat, stopLon, type, 
                 (0.5 - cos((stopLat - ?) * ${p}) / 2 
@@ -59,7 +59,7 @@ exports.getStopsFromStop = (req, res) => {
                 WHERE stopLat BETWEEN ? AND ?  -- SZYBKIE FILTROWANIE
                 AND stopLon BETWEEN ? AND ?  -- SZYBKIE FILTROWANIE
             ) AS subquery
-            WHERE distance <= ${distance / 1000} AND distance <> 0
+            WHERE distance <= ${distance} AND distance <> 0
             ORDER BY distance
         `).all(
             req.params.stopLat, req.params.stopLat, req.params.stopLon,
