@@ -14,8 +14,8 @@ export async function getRandomStops() {
     return res.json();
 }
 
-export async function getStopsFromStop(stopId) {
-    const res = await fetch(`http://localhost:3000/stopsfromstop/${stopId}`)
+export async function getStopsFromStop(stopLan, stopLon) {
+    const res = await fetch(`http://localhost:3000/stopsfromstop/${stopLan}/${stopLon}`)
     if (!res.ok) {
         throw new Error('Nie udało się pobrać przystanków z przystanku');
     }

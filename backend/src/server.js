@@ -12,7 +12,7 @@ const routesFromStop = require('./routes/routesFromStop');
 app.use('/routesfromstop/:stopId', routesFromStop);
 
 const stopsFromStop = require('./routes/stopsFromStop');
-app.use('/stopsfromstop/:stopId', stopsFromStop);
+app.use('/stopsfromstop/:stopLat/:stopLon', stopsFromStop);
 
 // const routesData = require('./routes/routesData');
 // app.use('/routesdata', routesData);

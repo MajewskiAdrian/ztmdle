@@ -1,7 +1,6 @@
 .StartEnd {
     margin: auto;
-    margin-top: 40px;
-    width: 40%;
+    width: 100%;
     min-height: 70px;
     border: 2px solid var(--primary_red);
     border-radius: 12px;
