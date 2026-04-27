@@ -32,3 +32,9 @@
   border: 2px solid white;
   border-radius: 50%;
 }
+
+.available-dot {
+  background-color: #646262;
+  border: 2px solid white;
+  border-radius: 50%;
+}

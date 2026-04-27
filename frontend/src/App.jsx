@@ -12,6 +12,7 @@ function App() {
   const [Koncowy, setKoncowy] = useState(null);
   const [routeCount, setRouteCount] = useState(0);
   const [showWinMessage, setShowWinMessage, WinMessage] = useGameWinLogic(currentStop, Koncowy, routeCount);
+  const [stopsList, setStopsList] = useState([]);
 
   return (
     <div className="App">
@@ -28,8 +29,8 @@ function App() {
             Koncowy={Koncowy}
             setKoncowy={setKoncowy}
           />
-          <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} routeCount={routeCount} setRouteCount={setRouteCount} />
-          <MainMap currentStop={currentStop} startStop={poczatkowy} endStop={Koncowy} />
+          <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} routeCount={routeCount} setRouteCount={setRouteCount} stopsList={stopsList} setStopsList={setStopsList}/>
+          <MainMap currentStop={currentStop} startStop={poczatkowy} endStop={Koncowy} stopsList={stopsList}/>
         </div>
 
         {/* <div className="flex justify-center m-0 mt-7 gap-5">

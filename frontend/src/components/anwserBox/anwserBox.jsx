@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react'
 import { getStopsFromRoute, getRoutesFromStop } from '../../api/getStops';
 
 
-export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, setRouteCount }) {
+export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, setRouteCount, stopsList, setStopsList }) {
     const [routesList, setRoutesList] = useState([]);
-    const [stopsList, setStopsList] = useState([]);
+    //const [stopsList, setStopsList] = useState([]);
     const [selectedRoute, setSelectedRoute] = useState(null);
     const [selectedStop, setSelectedStop] = useState(null);
     const [stopSequenceInRoute, setStopSequenceInRoute] = useState(null);
