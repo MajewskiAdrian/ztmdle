@@ -65,67 +65,76 @@ export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, set
         };
         fetchStops();
     }, [selectedRoute, startStop]);
-
-    if (!startStop || loading) return <div className="AnwserBox"><p>Ładowanie...</p></div>;
+    if (!startStop || loading) return <div className="p-4 font-share text-xs animate-pulse text-amber">Ładowanie linii...</div>;
     if (error) return <div className="AnwserBox"><p>Błąd: {error}</p></div>;
 
-    return (
-        <div className="AnwserBox">
-            <h4>Wybierz linię:</h4>
-            <div className="route-selection-container">
-                {routesList.map((route, index) => (
-                    <button key={index} className={`route-button ${selectedRoute === route ? 'active' : ''}`} onClick={() => setSelectedRoute(route)}>
-                        {route.routeId}
-                    </button>
-                ))}
+   return (
+        <div className="flex flex-col w-full p-4 pt-0">
+            <div className="flex items-center gap-4 px-2 py-3">
+                <span className="font-share text-[12px] tracking-[0.4em] text-muted">
+                    WYBIERZ LINIĘ
+                </span>
+                <div className="h-0.5 flex-1 bg-panel2"></div>
             </div>
-            {selectedRoute && (
-                <div className="list">
-                    <h4>Wybierz przystanek</h4>
-                    <div className="dropdownRow">
-                        <button
-                            type="button"
-                            className="dropdownToggle"
-                            onClick={() => setDropdownOpen((prev) => !prev)}
-                        >
-                            <span>
-                                {selectedStop
-                                    ? `${selectedStop.stopName} (${selectedStop.stopCode})`
-                                    : 'Wybierz przystanek'}
-                            </span>
-                            <span className={`arrow ${dropdownOpen ? 'open' : ''}`}>▾</span>
-                        </button>
-                        <button
-                            type="button"
-                            className="okButton"
-                            onClick={() => {
-                                if (selectedStop && onSetCurrentStop) {
-                                    onSetCurrentStop(selectedStop);
-                                    setRouteCount(routeCount + 1);
-                                    setSelectedRoute(null);
 
-                                }
-                            }}
-                        >
-                            Ok
+            <div className="grid grid-cols-4 gap-2">
+                {routesList.map((route, index) => {
+                    const isActive = selectedRoute?.routeId === route.routeId;
+
+                    return (
+                        <button
+                            key={index}
+                            onClick={() => setSelectedRoute(route)}
+                            className={`relative flex h-24 flex-col items-center justify-center border border-panel2 transition-all ${isActive ? 'bg-amber2/10 text-bg' : 'bg-panel2 hover:bg-white/5 text-text'}`}>
+                            <span className={`font-bebas text-3xl ${isActive ? 'text-amber' : 'text-text'}`}>
+                                {route.routeId}
+                            </span>
+                            <div className={`absolute bottom-0 h-1 w-full ${isActive ? 'bg-amber' : 'bg-muted2/40'}`}></div>
                         </button>
+                    );
+                })}
+            </div>
+
+            {selectedRoute && (
+                <div className="flex flex-col w-full ">
+                    <div className="flex items-center gap-4 px-2 py-3 pt-6">
+                        <span className="font-share text-[12px] tracking-[0.4em] text-muted">
+                            PRZYSTANEK DOCELOWY
+                        </span>
+                        <div className="h-0.5 flex-1 bg-panel2"></div>
                     </div>
-                    {dropdownOpen && (
-                        <div className="options" >
-                            {stopsList.map((stop) => (
-                                <div
-                                    key={stop.stopId}
-                                    className="option"
-                                    onClick={() => {
-                                        setSelectedStop(stop);
-                                        setDropdownOpen(false);
-                                    }}
-                                >
-                                    {stop.stopName} ({stop.stopCode})
-                                </div>
-                            ))}
+
+                    <div className="pb-8">
+                        <div className="flex flex-col bg-panel2 border border-muted2 rounded-sm overflow-hidden">
+                            <select 
+                                className="bg-panel2 p-4 text-text font-bebas text-xl outline-none cursor-pointer uppercase appearance-none"
+                                value={selectedStop?.stopId || ''}
+                                onChange={(e) => {
+                                    const stop = stopsList.find(s => s.stopId == e.target.value);
+                                    setSelectedStop(stop);
+                                }}
+                            >
+                                {stopsList.map((stop) => (
+                                    <option key={stop.stopId} value={stop.stopId} className="bg-panel2 text-text">
+                                        {stop.stopName} {stop.stopCode}
+                                    </option>
+                                ))}
+                            </select>
+                            
+                            <button
+                                onClick={() => {
+                                    if (selectedStop && onSetCurrentStop) {
+                                        onSetCurrentStop(selectedStop);
+                                        setRouteCount(routeCount + 1);
+                                        setSelectedRoute(null);
+                                    }
+                                }}
+                                className="w-full bg-amber hover:bg-amber2 text-bg font-bebas text-2xl py-4 transition-all tracking-widest"
+                            >
+                                JEDŹ
+                            </button>
                         </div>
-                    )}
+                    </div>
                 </div>
             )}
         </div>

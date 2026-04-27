@@ -6,11 +6,13 @@ export default function CurrentStopContainer({ currentStop }) {
 
   return (
     <div className="flex w-full flex-col  px-4">
-      <p className="font-share text-[12px] tracking-[0.4em] text-muted mb-2 ml-1">
-        JESTEŚ TUTAJ
-      </p>
-
-      <div className="relative flex w-full items-center justify-between bg-panel2 border border-muted2 border-l-4 border-l-amber p-4 mb-4">          
+      <div className="flex items-center gap-4 px-2 py-3">
+          <span className="font-share text-[12px] tracking-[0.4em] text-muted">
+              JESTEŚ TUTAJ
+          </span>
+          <div className="h-0.5 flex-1 bg-panel2"></div>
+      </div>
+      <div className="relative flex w-full items-center justify-between bg-panel2 border border-muted2 border-l-4 border-l-amber p-4">          
           <div className="flex flex-col">
             <span className="font-share text-[10px] tracking-widest text-muted">
               AKTUALNY PRZYSTANEK
