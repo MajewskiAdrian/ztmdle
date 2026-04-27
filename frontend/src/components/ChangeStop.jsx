@@ -1,7 +1,7 @@
 import { use, useEffect, useState } from "react"
 import { getStopsFromStop } from "../api/getStops";
 
-export default function changeStop({ currentStop, visible }) {
+export default function ChangeStop({ currentStop, setCurrentStop }) {
     const [avaliableStops, setAvaliableStops] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
@@ -23,16 +23,15 @@ export default function changeStop({ currentStop, visible }) {
         fetchStops()
     }, [currentStop])
 
-    if (visible = false) return;
-
     return (
         <div>
             <p className="text-gray-400 text-sm mb-2">Możliwe zmiany:</p>
             <div className="flex flex-wrap gap-3">
                 {avaliableStops.map((stop) => (
                     <div
+                        onClick={() => {setCurrentStop(stop)}}
                         key={stop.stopId}
-                        className="flex flex-col bg-black p-3 rounded"
+                        className="flex flex-col bg-black p-3 rounded hover:cursor-crosshair"
                     >
                         <span className="font-normal text-gray-400">
                             {stop.stopName} {stop.stopCode}

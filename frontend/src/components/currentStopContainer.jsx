@@ -1,6 +1,9 @@
+import { useState } from "react";
 import ChangeStop from "./ChangeStop";
 
-export default function CurrentStopContainer({ currentStop }) {
+export default function CurrentStopContainer({ currentStop, setCurrentStop}) {
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
         <div className="flex w-full flex-col border-2 border-red-500 rounded-xl text-white p-2 pl-3 max-h-17.5 overflow-auto">
             <div className="flex w-full items-center">
@@ -18,14 +21,16 @@ export default function CurrentStopContainer({ currentStop }) {
                     )}
 
                     {/* ten przycisk nic nie robi trzeba dodać logikę */}
-                    <button className="bg-orange-500 hover:bg-orange-600 transition-colors px-4 py-2 border border-orange-600 rounded-2xl whitespace-nowrap">
+                    <button 
+                        //onClick={() => {setIsOpen(true)}}
+                        className="bg-orange-500 hover:bg-orange-600 transition-colors px-4 py-2 border border-orange-600 rounded-2xl whitespace-nowrap">
                         zmień
                     </button>
 
                 </div>
 
             </div>
-            <ChangeStop currentStop={currentStop} />
+            <ChangeStop currentStop={currentStop} setCurrentStop={setCurrentStop} />
         </div>
     );
 }

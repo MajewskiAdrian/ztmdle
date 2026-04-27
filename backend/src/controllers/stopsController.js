@@ -63,7 +63,7 @@ exports.getStopsFromStop = (req, res) => {
             ORDER BY distance
         `).all(
             req.params.stopLat, req.params.stopLat, req.params.stopLon,
-            minLat, maxLat, minLon, maxLon // Dodatkowe parametry dla BETWEEN
+            minLat, maxLat, minLon, maxLon
         );
         res.json(stopsFromStop);
     } catch (err) {

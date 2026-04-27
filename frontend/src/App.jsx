@@ -20,7 +20,7 @@ function App() {
       <div className="w-full max-w-7xl mx-auto px-5 mt-5">
         <div className="grid grid-cols-[2fr_3fr] gap-5">
 
-          <CurrentStopContainer currentStop={currentStop} />
+          <CurrentStopContainer currentStop={currentStop} setCurrentStop={setCurrentStop}/>
           <StartEnd
             onStartSet={setPoczatkowy}
             currentStop={currentStop}
@@ -32,13 +32,8 @@ function App() {
           <MainMap currentStop={currentStop} startStop={poczatkowy} endStop={Koncowy} />
         </div>
 
-        {/* <div className="flex justify-center m-0 mt-7 gap-5">
-          
-        </div> */}
-
         {
-
-          //Guzik do wypierdolenia ale narazie jest bo przystanki nie dzialaja
+          // Przycisk do testowania
         }
         <button onClick={() => setCurrentStop(Koncowy)}>Test: Set to End Stop</button>
       </div>
