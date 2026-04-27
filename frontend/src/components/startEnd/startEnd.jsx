@@ -30,19 +30,41 @@ export default function StartEnd({ onStartSet, currentStop, onCurrentStopSet, Ko
             .finally(() => setLoading(false))
     }, []);
     
-    if (loading) return <p>Ładowanie...</p>
-    if (error) return <p>Błąd: {error}</p>
+    if (loading) return <p className="font-share text-xs text-muted">Ładowanie trasy...</p>;
+    if (error) return <p className="text-red font-share text-xs">Błąd: {error}</p>;
 
-    // wyświetl: początkowy i końcowy
     return (
-        <div className="StartEnd">
-            <div className="stopSummary">
-                <p>
-                    {Poczatkowy ? `${Poczatkowy.stopName} ${Poczatkowy.stopCode || ''}`.trim() : ''}
-                    {' - '}
-                    {Koncowy ? `${Koncowy.stopName} ${Koncowy.stopCode || ''}`.trim() : ''}
-                </p>
+        <div className="w-full py-8  bg-panel2 border border-muted2 p-4">
+            <div className="flex items-center justify-between w-full">
+                
+                <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-green flex items-center justify-center">
+                        <span className="font-bebas text-bg text-lg">A</span>
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="font-bebas text-xl tracking-wide text-text uppercase">
+                            {Poczatkowy ? `${Poczatkowy.stopName} ${Poczatkowy.stopCode || ''}`.trim() : ''}
+                        </span>
+                    </div>
+                </div>
+
+                <div className="flex-1 flex justify-center px-4">
+                    <span className="text-muted2 text-xl">-&gt;</span>
+                </div>
+
+                <div className="flex items-center gap-3 text-right">
+                    <div className="flex flex-col items-end">
+                        <span className="font-bebas text-xl tracking-wide text-muted uppercase italic">
+                        {Koncowy ? `${Koncowy.stopName} ${Koncowy.stopCode || ''}`.trim() : ''}
+                        </span>
+                    </div>
+                    <div className="w-8 h-8 rounded-full bg-red flex items-center justify-center">
+                        <span className="font-bebas text-text text-lg">B</span>
+                    </div>
+                </div>
+
             </div>
+
         </div>
-    )
+    );
 }

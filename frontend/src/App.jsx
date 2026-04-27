@@ -24,7 +24,7 @@ function App() {
           <MainMap currentStop={currentStop} startStop={poczatkowy} endStop={Koncowy} stopsList={stopsList}/>
         </main>
         
-        <aside className="flex flex-col h-1/2 md:h-full md:w-80 gap-4 overflow-y-auto border-t md:border-t-0 md:border-l border-border bg-panel p-4 shadow-[-5px_0_15px_rgba(0,0,0,0.3)]">
+        <aside className="flex flex-col h-1/2 md:h-full md:w-95 gap-4 overflow-y-auto border-t md:border-t-0 md:border-l border-border bg-panel">
         <StartEnd
             onStartSet={setPoczatkowy}
             currentStop={currentStop}
