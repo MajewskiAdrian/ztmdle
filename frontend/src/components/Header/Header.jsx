@@ -1,14 +1,23 @@
-import './Header.css';
 export default function Header() {
-    return (
-    <div className="container">
-        <div className="left">
-            <a href=""><img className='Logo' src="null" alt="Logo" /></a>
+  return (
+    <header className="flex h-16 w-full items-center border-b border-red bg-panel px-4 md:px-8 shadow-2xl">
+      
+      <div className="flex items-center gap-3">
+        <a href="/" className="flex items-center no-underline">
+          <div className="font-bebas text-2xl md:text-3xl tracking-wider leading-none">
+            <span className="text-red">ZTM</span>
+            <span className="text-text ml-0.5">DLE</span>
+          </div>    
+        </a>
+
+        <div className="hidden md:flex items-center border-l border-muted2 pl-4">
+          <span className="font-share text-xs tracking-[0.3em] text-muted pt-1">
+            GDAŃSK
+          </span>
         </div>
-        <div className="right">
-            <img src="null" alt="" />
-            <a href=""><img className="Znaczek" src="null" alt="Znaczek" /></a>
-        </div>
-    </div>
-    )
+      </div>
+
+
+    </header>
+  );
 }
