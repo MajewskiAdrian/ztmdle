@@ -18,19 +18,25 @@ function App() {
     <div className="App">
       <WinMessage />
       <Header />
-      <div className="w-full max-w-7xl mx-auto px-5 mt-5">
-        <div className="grid grid-cols-[2fr_3fr] gap-5">
+      <div className="flex flex-col md:flex-row h-screen w-full overflow-hidden bg-bg">
 
-          <CurrentStopContainer currentStop={currentStop} />
-          <StartEnd
+        <main className="flex-1 h-1/2 md:h-full relative"> 
+          <MainMap currentStop={currentStop} startStop={poczatkowy} endStop={Koncowy} stopsList={stopsList}/>
+        </main>
+        
+        <aside className="flex flex-col h-1/2 md:h-full md:w-80 gap-4 overflow-y-auto border-t md:border-t-0 md:border-l border-border bg-panel p-4 shadow-[-5px_0_15px_rgba(0,0,0,0.3)]">
+        <StartEnd
             onStartSet={setPoczatkowy}
             currentStop={currentStop}
             onCurrentStopSet={setCurrentStop}
             Koncowy={Koncowy}
             setKoncowy={setKoncowy}
           />
+        <CurrentStopContainer currentStop={currentStop} />
           <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} routeCount={routeCount} setRouteCount={setRouteCount} stopsList={stopsList} setStopsList={setStopsList}/>
-          <MainMap currentStop={currentStop} startStop={poczatkowy} endStop={Koncowy} stopsList={stopsList}/>
+
+        </aside>
+        
         </div>
 
         {/* <div className="flex justify-center m-0 mt-7 gap-5">
@@ -42,7 +48,7 @@ function App() {
           //Guzik do wypierdolenia ale narazie jest bo przystanki nie dzialaja
         }
         <button onClick={() => setCurrentStop(Koncowy)}>Test: Set to End Stop</button>
-      </div>
+      
     </div>
   )
 }

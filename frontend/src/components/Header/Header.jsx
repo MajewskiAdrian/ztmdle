@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <header className="flex h-16 w-full items-center border-b border-red bg-panel px-4 md:px-8 shadow-2xl">
+    <header className="flex h-16 w-full items-center border-b-3 border-red bg-panel px-4 md:px-8 shadow-2xl">
       
       <div className="flex items-center gap-3">
         <a href="/" className="flex items-center no-underline">

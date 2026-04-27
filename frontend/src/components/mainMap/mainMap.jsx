@@ -35,12 +35,12 @@ export default function MainMap({currentStop, startStop, endStop, stopsList}) {
     const positionCurrent = currentStop ? [currentStop.stopLat, currentStop.stopLon] : null;
     const positionStart = startStop ? [startStop.stopLat, startStop.stopLon] : null; 
     return (
-        <div className="MainMap">
+        <div className="MainMap h-full w-full">
             <MapContainer 
                 center={positionCenter} 
                 zoom={11} 
                 scrollWheelZoom={true}
-                style={{ height: "100%", width: "100%", borderRadius: "12px", overflow: "hidden", zIndex: 0 }}
+                className="h-full w-full"
             >
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
