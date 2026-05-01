@@ -42,9 +42,6 @@ export default function StartEnd({ onStartSet, currentStop, onCurrentStopSet, Ko
                     {' - '}
                     {Koncowy ? `${Koncowy.stopName} ${Koncowy.stopCode || ''}`.trim() : ''}
                 </p>
-                <p className="currentStop">
-                    {currentStop ? `Bieżący przystanek: ${currentStop.stopName} ${currentStop.stopCode || ''}`.trim() : ''}
-                </p>
             </div>
         </div>
     )
