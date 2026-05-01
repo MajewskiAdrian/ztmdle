@@ -23,18 +23,24 @@ const startDot = L.divIcon({
   iconAnchor: [6, 6],      // środek kropki
 });
 
-export default function MainMap({currentStop, startStop, endStop}) {
+const availableDot = L.divIcon({
+  className: 'available-dot', 
+  iconSize: [10, 10],
+  iconAnchor: [5, 5],
+});
+
+export default function MainMap({currentStop, startStop, endStop, stopsList}) {
     const positionCenter = [54.372, 18.62]; 
     const positionEnd = endStop ? [endStop.stopLat, endStop.stopLon] : null;
     const positionCurrent = currentStop ? [currentStop.stopLat, currentStop.stopLon] : null;
     const positionStart = startStop ? [startStop.stopLat, startStop.stopLon] : null; 
     return (
-        <div className="MainMap">
+        <div className="MainMap h-full w-full">
             <MapContainer 
                 center={positionCenter} 
                 zoom={11} 
                 scrollWheelZoom={true}
-                style={{ height: "100%", width: "100%", borderRadius: "12px", overflow: "hidden", zIndex: 0 }}
+                className="h-full w-full"
             >
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -62,6 +68,14 @@ export default function MainMap({currentStop, startStop, endStop}) {
                     </Tooltip>
                 </Marker>
                 }
+
+                {stopsList && stopsList.map((stop) => (
+                <Marker position={[stop.stopLat, stop.stopLon]} icon={availableDot} key={`${stop.stopId}-${stop.stopSequence || stop.routeId}`}>
+                    <Tooltip direction="top" offset={[0, -5]}>
+                        {`${stop.stopName} ${stop.stopCode || ''}`.trim()}
+                    </Tooltip>
+                </Marker>
+                ))}
                 
                 
             </MapContainer>
