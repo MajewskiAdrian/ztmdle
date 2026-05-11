@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ChangeStop from "./ChangeStop";
 
-export default function CurrentStopContainer({ currentStop }) {
+export default function CurrentStopContainer({ currentStop, setCurrentStop }) {
   const [showChanges, setShowChanges] = useState(false);
 
   return (
@@ -32,7 +32,7 @@ export default function CurrentStopContainer({ currentStop }) {
       </div>
 
       {showChanges && (
-          <ChangeStop currentStop={currentStop} visible={showChanges} />
+          <ChangeStop currentStop={currentStop} setCurrentStop={setCurrentStop} visible={showChanges} />
       )}
     </div>
   );

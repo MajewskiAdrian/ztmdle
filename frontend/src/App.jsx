@@ -32,21 +32,13 @@ function App() {
             Koncowy={Koncowy}
             setKoncowy={setKoncowy}
           />
-        <CurrentStopContainer currentStop={currentStop} />
+        <CurrentStopContainer currentStop={currentStop} setCurrentStop={setCurrentStop} />
           <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} routeCount={routeCount} setRouteCount={setRouteCount} stopsList={stopsList} setStopsList={setStopsList}/>
 
         </aside>
         
         </div>
 
-        {/* <div className="flex justify-center m-0 mt-7 gap-5">
-          
-        </div> */}
-
-        {
-
-          //Guzik do wypierdolenia ale narazie jest bo przystanki nie dzialaja
-        }
         <button onClick={() => setCurrentStop(Koncowy)}>Test: Set to End Stop</button>
       
     </div>
