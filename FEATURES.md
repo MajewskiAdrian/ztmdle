@@ -65,7 +65,26 @@
 
 - [ ] Dodać mapę do komponentu `MainMap` - wizualizacja tras i przystanków
 
-## Przejscie z przystanku Tramwaj-Autobus
+## Nie doublowanie/Usunac pusta linie
 
-- Albo sie odrazu wszsytkie mozwlwe beda sie wyswietlac albo 
-mozliwosc przejscia z np swojskiej autobusowej na swojska tramwaja
+- Nieraz pokazują się dwa przystanki na liscie wyboru lini
+
+## Zmienic rozmiar startowy mapy
+
+## Dodac Koncowoa trase po dojezdzie do przystanku koncowego
+
+## BAZA DANYCH 
+
+- Dodac baze danych 
+- Login,haslo,Streak logowania?,Winratio?,szymon chce maila,
+
+## Dodac funckjonalosc liczenia wyniku (ilosc przesiadek)
+
+- 1 Opcja jakos znajdujemy najszybsza trase (Api jakdojade??) - ciezkie
+- 2 Opcja Robimy wykres slupkowy (tylko by dzialalo z daily czy cos) - srednie
+- 3 Opcja  ???
+
+## Design wygrania
+
+## Dodac kampanie (Szymona popierdolilo)
+- co xd
