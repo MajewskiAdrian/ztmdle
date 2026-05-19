@@ -2,8 +2,16 @@ db = require('../config/dbconnection');
 
 exports.getRandomStops = (req, res) => {
     try {
-        // Dla uproszczenia, wybieramy tylko przystanki z Gdańska (zoneId=1).
-        const randomStops = db.prepare(`SELECT * FROM stops WHERE zoneId=1 ORDER BY RANDOM() LIMIT 2`).all();
+        // Dla uproszczenia, wybieramy tylko przystanki z Gdańska (zoneId=1) i znajdujące się na trasac MAIN.
+        const randomStops = db.prepare(`
+            SELECT DISTINCT s.*
+            FROM stops s
+            INNER JOIN stopsintrip si ON s.stopId = si.stopId
+            INNER JOIN trips t ON si.routeId = t.routeId AND si.tripId = t.tripId
+            WHERE s.zoneId = 1 AND t.type = 'MAIN'
+            ORDER BY RANDOM()
+            LIMIT 2
+            `).all();
         res.json(randomStops);
     } catch (err) {
         res.status(500)
@@ -36,11 +44,8 @@ exports.getStopsFromStop = (req, res) => {
         const p = Math.PI / 180;
         const distance = 150; // m
 
-        // Margines dla szerokości (zawsze stały)
         const marginLat = distance / 111000;
-
-        // Margines dla długości (zależny od tego, jak blisko bieguna jesteś)
-        // Musimy podzielić marginLat przez cosinus szerokości geograficznej
+ 
         const cosLat = Math.cos(req.params.stopLat * Math.PI / 180);
         const marginLon = distance / (111000 * cosLat);
 
@@ -56,14 +61,14 @@ exports.getStopsFromStop = (req, res) => {
                 (0.5 - cos((stopLat - ?) * ${p}) / 2 
                 + cos(? * ${p}) * cos(stopLat * ${p}) * (1 - cos((stopLon - ?) * ${p})) / 2) AS A
                 FROM stops
-                WHERE stopLat BETWEEN ? AND ?  -- SZYBKIE FILTROWANIE
-                AND stopLon BETWEEN ? AND ?  -- SZYBKIE FILTROWANIE
+                WHERE stopLat BETWEEN ? AND ? 
+                AND stopLon BETWEEN ? AND ?  
             ) AS subquery
             WHERE distance <= ${distance} AND distance <> 0
             ORDER BY distance
         `).all(
             req.params.stopLat, req.params.stopLat, req.params.stopLon,
-            minLat, maxLat, minLon, maxLon // Dodatkowe parametry dla BETWEEN
+            minLat, maxLat, minLon, maxLon 
         );
         res.json(stopsFromStop);
     } catch (err) {

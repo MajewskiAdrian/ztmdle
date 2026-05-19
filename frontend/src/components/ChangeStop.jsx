@@ -29,19 +29,31 @@ export default function ChangeStop({ currentStop, setCurrentStop }) {
             <div className="flex flex-wrap gap-3">
                 {avaliableStops.map((stop) => (
                     <div
-                        onClick={() => {setCurrentStop(stop)}}
+                        onClick={() => { setCurrentStop(stop) }}
                         key={stop.stopId}
-                        className="flex flex-col bg-black text-gray-400 p-3 rounded hover:bg-amber2 hover:text-black cursor-pointer transition duration-300 ease-in-out"
+                        className="flex flex-row bg-black text-gray-400 p-3 rounded hover:bg-amber2 hover:text-black cursor-pointer transition duration-300 ease-in-out"
                     >
-                        <span className="font-normal">
-                            {stop.stopName} {stop.stopCode}
-                        </span>
-
-                        {stop.distance && (
-                            <span className="text-sm">
-                                {stop.distance} m
+                        <div
+                            className="flex flex-col"
+                        >
+                            <span className="font-normal">
+                                {stop.stopName} {stop.stopCode}
                             </span>
-                        )}
+
+                            {stop.distance && (
+                                <span className="text-sm">
+                                    {stop.distance} m
+                                </span>
+                            )}
+                        </div>
+                        <div className="">
+                            {stop.type && (
+                                <span className="align-text-middle">
+                                    {stop.type == "BUS" ? "🚍" : stop.type == "TRAM" ? "🚊" : "🚍🚊"}
+                                </span>
+                            )}
+                        </div>
+
                     </div>
                 ))}
             </div>
