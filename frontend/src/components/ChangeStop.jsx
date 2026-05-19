@@ -24,37 +24,45 @@ export default function ChangeStop({ currentStop, setCurrentStop }) {
     }, [currentStop])
 
     return (
-        <div>
-            <p className="text-gray-400 text-sm mb-2">Możliwe zmiany:</p>
-            <div className="flex flex-wrap gap-3">
+        <div className="flex flex-col w-full">
+            <div className="flex items-center gap-4 px-2 py-3 pt-6">
+                <span className="font-share text-[12px] tracking-[0.4em] text-muted">
+                    MOŻLIWE ZMIANY
+                </span>
+                <div className="h-0.5 flex-1 bg-panel2"></div>
+            </div>
+
+            {loading && (
+                <p className="font-share text-xs text-muted px-2 py-4">
+                    Wyszukiwanie przystanków...
+                </p>
+            )}
+
+            {!loading && avaliableStops.length === 0 && (
+                <p className="font-share text-xs text-muted px-2 py-4">
+                    Brak możliwych zmian w pobliżu.
+                </p>
+            )}
+
+            <div className="grid grid-cols-3 gap-2">
                 {avaliableStops.map((stop) => (
-                    <div
-                        onClick={() => { setCurrentStop(stop) }}
+                    <button
                         key={stop.stopId}
-                        className="flex flex-row bg-black text-gray-400 p-3 rounded hover:bg-amber2 hover:text-black cursor-pointer transition duration-300 ease-in-out"
+                        onClick={() => setCurrentStop(stop)}
+                        className="relative flex h-24 flex-col items-center justify-center border border-panel2 bg-panel2 hover:bg-white/5 text-text transition-all p-2"
                     >
-                        <div
-                            className="flex flex-col"
-                        >
-                            <span className="font-normal">
-                                {stop.stopName} {stop.stopCode}
+                        <span className="font-bebas text-sm text-center">
+                            {stop.stopName} {stop.stopCode}
+                        </span>
+                        {stop.distance && (
+                            <span className="text-xs text-muted mt-1">
+                                {stop.distance} m
                             </span>
-
-                            {stop.distance && (
-                                <span className="text-sm">
-                                    {stop.distance} m
-                                </span>
-                            )}
+                        )}
+                        <div className="text-lg">
+                            {stop.type === "BUS" ? "🚍" : stop.type === "TRAM" ? "🚊" : "🚍🚊"}
                         </div>
-                        <div className="">
-                            {stop.type && (
-                                <span className="align-text-middle">
-                                    {stop.type == "BUS" ? "🚍" : stop.type == "TRAM" ? "🚊" : "🚍🚊"}
-                                </span>
-                            )}
-                        </div>
-
-                    </div>
+                    </button>
                 ))}
             </div>
         </div>

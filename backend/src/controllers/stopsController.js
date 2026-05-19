@@ -2,7 +2,7 @@ db = require('../config/dbconnection');
 
 exports.getRandomStops = (req, res) => {
     try {
-        // Dla uproszczenia, wybieramy tylko przystanki z Gdańska (zoneId=1) i znajdujące się na trasac MAIN.
+        // Dla uproszczenia, wybieramy tylko przystanki z Gdańska (zoneId=1) i znajdujące się na trasach MAIN.
         const randomStops = db.prepare(`
             SELECT DISTINCT s.*
             FROM stops s
@@ -65,7 +65,7 @@ exports.getStopsFromStop = (req, res) => {
                 AND stopLon BETWEEN ? AND ?  
             ) AS subquery
             WHERE distance <= ${distance} AND distance <> 0
-            ORDER BY distance
+            ORDER BY stopCode
         `).all(
             req.params.stopLat, req.params.stopLat, req.params.stopLon,
             minLat, maxLat, minLon, maxLon 

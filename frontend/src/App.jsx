@@ -15,10 +15,10 @@ function App() {
   const [stopsList, setStopsList] = useState([]);
 
   return (
-    <div className="App">
+    <div className="App h-screen overflow-hidden">
       <WinMessage />
       <Header />
-      <div className="flex flex-col md:flex-row h-screen w-full overflow-hidden bg-bg">
+      <div className="flex flex-col md:flex-row h-full w-full overflow-hidden bg-bg">
 
         <aside className="flex flex-col h-1/2 md:h-full md:w-95 gap-4 overflow-y-auto border-t md:border-t-0 md:border-l border-border bg-panel">
         <StartEnd

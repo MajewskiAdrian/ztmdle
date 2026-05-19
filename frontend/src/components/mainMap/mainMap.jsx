@@ -46,12 +46,6 @@ export default function MainMap({currentStop, startStop, endStop, stopsList}) {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                {startStop &&
-                <Marker position={positionStart} icon={startDot}>
-                    <Tooltip direction="top" offset={[0, -5]} opacity={1} permanent={false}>
-                        {`START: ${startStop.stopName} ${startStop.stopCode || ''}`.trim()}
-                    </Tooltip>
-                </Marker>}
 
                 {endStop && 
                 <Marker position={positionEnd} icon={endDot}>
@@ -68,6 +62,13 @@ export default function MainMap({currentStop, startStop, endStop, stopsList}) {
                     </Tooltip>
                 </Marker>
                 }
+
+                {startStop &&
+                <Marker position={positionStart} icon={startDot}>
+                    <Tooltip direction="top" offset={[0, -5]} opacity={1} permanent={false}>
+                        {`START: ${startStop.stopName} ${startStop.stopCode || ''}`.trim()}
+                    </Tooltip>
+                </Marker>}
 
                 {stopsList && stopsList.map((stop) => (
                 <Marker position={[stop.stopLat, stop.stopLon]} icon={availableDot} key={`${stop.stopId}-${stop.stopSequence || stop.routeId}`}>
