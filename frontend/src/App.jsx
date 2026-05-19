@@ -20,10 +20,6 @@ function App() {
       <Header />
       <div className="flex flex-col md:flex-row h-screen w-full overflow-hidden bg-bg">
 
-        <main className="flex-1 h-1/2 md:h-full relative"> 
-          <MainMap currentStop={currentStop} startStop={poczatkowy} endStop={Koncowy} stopsList={stopsList}/>
-        </main>
-        
         <aside className="flex flex-col h-1/2 md:h-full md:w-95 gap-4 overflow-y-auto border-t md:border-t-0 md:border-l border-border bg-panel">
         <StartEnd
             onStartSet={setPoczatkowy}
@@ -36,7 +32,10 @@ function App() {
           <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} routeCount={routeCount} setRouteCount={setRouteCount} stopsList={stopsList} setStopsList={setStopsList}/>
 
         </aside>
-        
+
+        <main className="flex-1 h-1/2 md:h-full relative"> 
+          <MainMap currentStop={currentStop} startStop={poczatkowy} endStop={Koncowy} stopsList={stopsList}/>
+        </main>
         </div>
 
         <button onClick={() => setCurrentStop(Koncowy)}>Test: Set to End Stop</button>
