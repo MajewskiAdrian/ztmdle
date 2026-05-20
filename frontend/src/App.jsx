@@ -15,31 +15,31 @@ function App() {
   const [stopsList, setStopsList] = useState([]);
 
   return (
-    <div className="App h-screen overflow-hidden">
+    <div className="App min-h-screen h-full overflow-hidden">
       <WinMessage />
       <Header />
-      <div className="flex flex-col md:flex-row h-full w-full overflow-hidden bg-bg">
+      <div className="flex flex-col md:flex-row h-full w-full min-h-0 overflow-hidden bg-bg items-stretch">
 
-        <aside className="flex flex-col h-1/2 md:h-full md:w-95 gap-4 overflow-y-auto border-t md:border-t-0 md:border-l border-border bg-panel">
-        <StartEnd
+        <aside className="flex flex-col flex-none md:w-80 w-full h-auto md:h-full gap-4 overflow-y-auto border-t md:border-t-0 md:border-l border-border bg-panel min-h-0">
+          <StartEnd
             onStartSet={setPoczatkowy}
             currentStop={currentStop}
             onCurrentStopSet={setCurrentStop}
             Koncowy={Koncowy}
             setKoncowy={setKoncowy}
           />
-        <CurrentStopContainer currentStop={currentStop} setCurrentStop={setCurrentStop} />
-          <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} routeCount={routeCount} setRouteCount={setRouteCount} stopsList={stopsList} setStopsList={setStopsList}/>
+          <CurrentStopContainer currentStop={currentStop} setCurrentStop={setCurrentStop} />
+          <AnwserBox startStop={currentStop} onSetCurrentStop={setCurrentStop} routeCount={routeCount} setRouteCount={setRouteCount} stopsList={stopsList} setStopsList={setStopsList} />
 
         </aside>
 
-        <main className="flex-1 h-1/2 md:h-full relative"> 
-          <MainMap currentStop={currentStop} startStop={poczatkowy} endStop={Koncowy} stopsList={stopsList}/>
+        <main className="flex-1 min-w-0 h-auto md:h-full min-h-0 relative">
+          <MainMap currentStop={currentStop} startStop={poczatkowy} endStop={Koncowy} stopsList={stopsList} />
         </main>
-        </div>
+      </div>
 
-        <button onClick={() => setCurrentStop(Koncowy)}>Test: Set to End Stop</button>
-      
+      <button onClick={() => setCurrentStop(Koncowy)}>Test: Set to End Stop</button>
+
     </div>
   )
 }
