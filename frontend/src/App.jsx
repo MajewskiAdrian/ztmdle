@@ -18,9 +18,9 @@ function App() {
     <div className="App min-h-screen h-full overflow-hidden">
       <WinMessage />
       <Header />
-      <div className="flex flex-col md:flex-row h-full w-full min-h-0 overflow-hidden bg-bg items-stretch">
+      <div className="flex flex-col md:flex-row h-screen w-full min-h-0 overflow-hidden bg-bg items-stretch">
 
-        <aside className="flex flex-col flex-none md:w-80 w-full h-auto md:h-full gap-4 overflow-y-auto border-t md:border-t-0 md:border-l border-border bg-panel min-h-0">
+        <aside className="flex flex-col flex-none md:w-96 w-full h-auto md:h-full gap-4 overflow-y-auto border-t md:border-t-0 md:border-l border-border bg-panel min-h-0">
           <StartEnd
             onStartSet={setPoczatkowy}
             currentStop={currentStop}

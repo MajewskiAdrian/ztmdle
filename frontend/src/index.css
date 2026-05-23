@@ -93,21 +93,6 @@ body{
   cursor: pointer;
 }
 
-@media (min-width:768px) {
-  .App > div > aside {
-    box-sizing: border-box;
-    width: 20rem;      
-    flex: 0 0 20rem;
-    min-width: 20rem;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-
-  .App > div > main {
-    min-width: 0;
-  }
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
