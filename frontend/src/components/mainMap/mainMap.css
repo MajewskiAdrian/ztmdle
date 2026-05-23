@@ -5,9 +5,8 @@
     background-color: #242424;
     overflow: hidden;
 }
-
-.leaflet-tile-pane {
-    filter: grayscale(20%) brightness(0.7);
+ .leaflet-tile {
+  filter: brightness(0.55) saturate(0.6) hue-rotate(10deg)!important;;
 }
 .leaflet-container {
     height: 100% !important;
@@ -17,24 +16,24 @@
 
 .end-dot {
   background-color: #bb1010;
-  border: 2px solid white;
+  border: 3px solid white;
   border-radius: 50%;
 }
 
 .current-dot {
   background-color: #f9b14c;
-  border: 2px solid white;
+  border: 3px solid white;
   border-radius: 50%;
 }
 
 .start-dot {
   background-color: #2ab849;
-  border: 2px solid white;
+  border: 3px solid white;
   border-radius: 50%;
 }
 
 .available-dot {
-  background-color: #646262;
-  border: 2px solid white;
+  background: rgba(255,255,255,0.5);
+  border: 3px solid white;
   border-radius: 50%;
 }

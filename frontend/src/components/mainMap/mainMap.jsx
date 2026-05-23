@@ -7,27 +7,28 @@ import { getStopsFromRoute, getRoutesFromStop } from '../../api/getStops';
 
 const endDot = L.divIcon({
   className: 'end-dot', 
-  iconSize: [12, 12],      // rozmiar
-  iconAnchor: [6, 6],      // środek kropki
+  iconSize: [16, 16], // rozmiar
+  iconAnchor: [8, 8] // środek kropki
 });
 
 const currentDot = L.divIcon({
   className: 'current-dot', 
-  iconSize: [12, 12],      // rozmiar
-  iconAnchor: [6, 6],      // środek kropki
+  iconSize: [16, 16], // rozmiar
+  iconAnchor: [8, 8] // środek kropki
 });
 
 const startDot = L.divIcon({
   className: 'start-dot', 
-  iconSize: [12, 12],      // rozmiar
-  iconAnchor: [6, 6],      // środek kropki
+  iconSize: [16, 16], // rozmiar
+  iconAnchor: [8, 8] // środek kropki
 });
 
 const availableDot = L.divIcon({
   className: 'available-dot', 
-  iconSize: [10, 10],
-  iconAnchor: [5, 5],
+  iconSize: [14, 14], // rozmiar
+  iconAnchor: [8, 8] // środek kropki
 });
+
 
 export default function MainMap({currentStop, startStop, endStop, stopsList}) {
     const positionCenter = [54.372, 18.62]; 
