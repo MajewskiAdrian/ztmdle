@@ -87,7 +87,7 @@ export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, set
                             onClick={() => setSelectedRoute(route)}
                             className={`relative flex h-24 flex-col items-center justify-center border border-panel2 transition-all ${isActive ? 'bg-amber2/10 text-bg' : 'bg-panel2 hover:bg-white/5 text-text'}`}>
                             <span className={`font-bebas text-3xl ${isActive ? 'text-amber' : 'text-text'}`}>
-                                {route.routeId}
+                                {route.routeId.toString().startsWith("40") ? "N" + route.routeId.toString().substr(2) : route.routeId.toString().startsWith("4") && route.routeId.toString().length > 1 ? "N" + route.routeId.toString().substr(1) : route.routeId}
                             </span>
                             <div className={`absolute bottom-0 h-1 w-full ${isActive ? 'bg-amber' : 'bg-muted2/40'}`}></div>
                         </button>
