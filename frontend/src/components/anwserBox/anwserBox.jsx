@@ -79,8 +79,7 @@ export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, set
 
             <div className="grid grid-cols-4 gap-2">
                 {routesList.map((route, index) => {
-                    const isActive = selectedRoute?.routeId === route.routeId;
-
+                    const isActive = selectedRoute?.routeId === route.routeId && selectedRoute?.tripId === route.tripId;
                     return (
                         <button
                             key={index}
