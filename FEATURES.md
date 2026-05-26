@@ -86,3 +86,7 @@
 
 ## Dodac kampanie (Szymona popierdolilo)
 - co xd
+## leaderboard 
+- nie wiem jaki ale kazano mi zapisac to
+## ladowanie szkieletowe 
+- spooky scary skeleton

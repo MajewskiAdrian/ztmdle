@@ -23,11 +23,8 @@ export default function Header() {
         <Link to="/" className="rounded px-3 py-2 text-text hover:bg-white/10">
           Start
         </Link>
-        <Link to="/freeplay" className="rounded px-3 py-2 text-text hover:bg-white/10">
-          Freeplay
-        </Link>
-        <Link to="/second-mode" className="rounded bg-red px-3 py-2 text-white hover:bg-red/90">
-          Second Mode
+        <Link to="/profile" className="rounded bg-red px-3 py-2 text-white hover:bg-red/90">
+          Profil
         </Link>
       </nav>
 
