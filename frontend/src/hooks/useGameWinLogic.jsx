@@ -1,13 +1,28 @@
 import { useEffect, useState } from 'react';
 
-export const useGameWinLogic = (currentStop, endStop, routeCount) => {
+export const useGameWinLogic = (currentStop, endStop, routeCount, onReplay) => {
   const [showWinMessage, setShowWinMessage] = useState(false);
 
   useEffect(() => {
-    if (currentStop && endStop && currentStop.stopId === endStop.stopId) {
+    const currentId = currentStop?.stopId
+    const endId = endStop?.stopId
+
+    if (currentId != null && endId != null && String(currentId) === String(endId)) {
       setShowWinMessage(true);
+    } else {
+      setShowWinMessage(false);
     }
   }, [currentStop, endStop]);
+
+  const handleReplay = () => {
+    setShowWinMessage(false)
+    if (onReplay) {
+      onReplay()
+    }
+    setTimeout(() => {
+      window.location.reload()
+    }, 100)
+  }
 
   const WinMessage = () => (
     showWinMessage && (
@@ -30,7 +45,7 @@ export const useGameWinLogic = (currentStop, endStop, routeCount) => {
             </div>
             
           <button 
-            className="w-full bg-red hover:bg-red2 text-text font-bebas text-2xl py-5 mt-5 transition-all tracking-widest flex items-center justify-center" onClick={() => { window.location.reload(); }}>
+            className="w-full bg-red hover:bg-red2 text-text font-bebas text-2xl py-5 mt-5 transition-all tracking-widest flex items-center justify-center" onClick={handleReplay}>
             ZAGRAJ PONOWNIE
           </button>
         </div>

@@ -69,8 +69,6 @@
 
 - Nieraz pokazują się dwa przystanki na liscie wyboru lini
 
-## Zmienic rozmiar startowy mapy
-
 ## Dodac Koncowoa trase po dojezdzie do przystanku koncowego
 
 ## BAZA DANYCH 
@@ -88,3 +86,7 @@
 
 ## Dodac kampanie (Szymona popierdolilo)
 - co xd
+## leaderboard 
+- nie wiem jaki ale kazano mi zapisac to
+## ladowanie szkieletowe 
+- spooky scary skeleton

@@ -2,8 +2,8 @@ import './startEnd.css'
 import { useState, useEffect } from 'react'
 import { getStops } from '../../api/getStops'
 
-export default function StartEnd({ onStartSet, currentStop, onCurrentStopSet, Koncowy, setKoncowy }) {
-    const [Poczatkowy, setPoczatkowy] = useState(null);
+export default function StartEnd({ poczatkowy, onStartSet, currentStop, onCurrentStopSet, Koncowy, setKoncowy }) {
+    const [Poczatkowy, setPoczatkowy] = useState(poczatkowy || null);
 
     const [stops, setStops] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -15,15 +15,20 @@ export default function StartEnd({ onStartSet, currentStop, onCurrentStopSet, Ko
                 setStops(data)
                 const start = data[0] || null;
                 const end = data[1] || null;
+                const initialStart = poczatkowy || start;
+                const initialEnd = Koncowy || end;
 
-                setPoczatkowy(start)
-                setKoncowy(end)
+                setPoczatkowy(initialStart)
+                setKoncowy(initialEnd)
 
-                if (onStartSet) {
+                if (!poczatkowy && onStartSet) {
                     onStartSet(start)
                 }
+                if (!Koncowy && setKoncowy) {
+                    setKoncowy(end)
+                }
                 if (!currentStop && onCurrentStopSet) {
-                    onCurrentStopSet(start)
+                    onCurrentStopSet(initialStart)
                 }
             })
             .catch((e) => setError(e.message))
