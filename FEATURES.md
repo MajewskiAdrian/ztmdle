@@ -69,8 +69,6 @@
 
 - Nieraz pokazują się dwa przystanki na liscie wyboru lini
 
-## Zmienic rozmiar startowy mapy
-
 ## Dodac Koncowoa trase po dojezdzie do przystanku koncowego
 
 ## BAZA DANYCH 
