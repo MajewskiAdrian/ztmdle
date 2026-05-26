@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { getStopsFromRoute, getRoutesFromStop } from '../../api/getStops';
 
 
-export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, setRouteCount, stopsList, setStopsList }) {
+export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, setRouteCount, timeCount, setTimeCount, stopsList, setStopsList }) {
     const [routesList, setRoutesList] = useState([]);
     //const [stopsList, setStopsList] = useState([]);
     const [selectedRoute, setSelectedRoute] = useState(null);
@@ -53,12 +53,12 @@ export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, set
                 const availableStops = stops.filter(
                     (stop) =>
                         currentSequence == null ||
-                        Number(stop.stopSequence) > currentSequence
+                        Number(stop.stopSequence) >= currentSequence
                 );
 
                 setStopsList(availableStops);
                 setStopSequenceInRoute(currentSequence);
-                setSelectedStop(availableStops[0] || null);
+                setSelectedStop(availableStops[1] || null);
             } catch (e) {
                 console.error("Błąd przystanków trasy:", e.message);
             }
@@ -113,11 +113,16 @@ export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, set
                                     setSelectedStop(stop);
                                 }}
                             >
-                                {stopsList.map((stop) => (
-                                    <option key={stop.stopId} value={stop.stopId} className="bg-panel2 text-text">
-                                        {stop.stopName} {stop.stopCode}
-                                    </option>
-                                ))}
+                                {stopsList.map((stop, index) => {
+                                    if (index > 0) {
+
+                                        return (
+                                            <option key={stop.stopId} value={stop.stopId} className="bg-panel2 text-text">
+                                                {stop.stopName} {stop.stopCode} + {(new Date(stop.arrivalTime) - new Date(stopsList[0].arrivalTime))/60000} min
+                                            </option>
+                                        )
+                                    }
+                                })}
                             </select>
                             
                             <button
@@ -125,6 +130,7 @@ export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, set
                                     if (selectedStop && onSetCurrentStop) {
                                         onSetCurrentStop(selectedStop);
                                         setRouteCount(routeCount + 1);
+                                        setTimeCount(prev => prev + (((new Date(selectedStop.arrivalTime)) - new Date(stopsList[0].arrivalTime)))/60000)
                                         setSelectedRoute(null);
                                     }
                                 }}

@@ -41,7 +41,8 @@ function App() {
   const [currentStop, setCurrentStop] = useState(savedGame?.currentStop ?? null)
   const [Koncowy, setKoncowy] = useState(savedGame?.Koncowy ?? null)
   const [routeCount, setRouteCount] = useState(savedGame?.routeCount ?? 0)
-  const [showWinMessage, setShowWinMessage, WinMessage] = useGameWinLogic(currentStop, Koncowy, routeCount, clearGameCookie)
+  const [timeCount, setTimeCount] = useState(savedGame?.timeCount ?? 0)
+  const [showWinMessage, setShowWinMessage, WinMessage] = useGameWinLogic(currentStop, Koncowy, routeCount, timeCount, clearGameCookie)
   const [stopsList, setStopsList] = useState([])
 
   useEffect(() => {
@@ -50,9 +51,10 @@ function App() {
       currentStop,
       Koncowy,
       routeCount,
+      timeCount
     }
     setCookie(COOKIE_NAME, JSON.stringify(gameData), 30)
-  }, [poczatkowy, currentStop, Koncowy, routeCount])
+  }, [poczatkowy, currentStop, Koncowy, routeCount, timeCount])
 
   return (
     <Routes>
@@ -69,6 +71,8 @@ function App() {
             setKoncowy={setKoncowy}
             routeCount={routeCount}
             setRouteCount={setRouteCount}
+            timeCount={timeCount}
+            setTimeCount={setTimeCount}
             stopsList={stopsList}
             setStopsList={setStopsList}
             WinMessage={WinMessage}

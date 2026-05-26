@@ -13,6 +13,8 @@ export default function FreePlay({
   setKoncowy,
   routeCount,
   setRouteCount,
+  timeCount,
+  setTimeCount,
   stopsList,
   setStopsList,
   WinMessage,
@@ -37,6 +39,8 @@ export default function FreePlay({
             onSetCurrentStop={setCurrentStop}
             routeCount={routeCount}
             setRouteCount={setRouteCount}
+            timeCount={timeCount}
+            setTimeCount={setTimeCount}
             stopsList={stopsList}
             setStopsList={setStopsList}
           />

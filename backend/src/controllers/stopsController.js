@@ -22,12 +22,15 @@ exports.getRandomStops = (req, res) => {
 exports.getStopsFromRoute = (req, res) => {
     try {
         const stopsFromRoute = db.prepare(`
-            SELECT stops.stopId, stops.stopCode, stops.stopName, stops.stopLat, stops.stopLon, stopsintrip.routeId, stopsintrip.stopSequence 
+            SELECT stops.stopId, stops.stopCode, stops.stopName, stops.stopLat, stops.stopLon, stopsintrip.routeId, stopsintrip.stopSequence, stoptimes.arrivalTime, stoptimes.'order'
             FROM stops 
             INNER JOIN stopsintrip ON stops.stopId=stopsintrip.stopId
+            INNER JOIN stoptimes ON stops.stopId=stoptimes.stopId
             WHERE stopsintrip.routeId = ? AND stopsintrip.tripId = ?
-            ORDER BY stopSequence
-            `).all(req.params.routeId, req.params.tripId);
+            AND stoptimes.routeId = ? AND stoptimes.tripId = ?
+            GROUP BY stoptimes.stopId
+            ORDER BY stopsintrip.stopSequence
+            `).all(req.params.routeId, req.params.tripId, req.params.routeId, req.params.tripId);
 
         res.send(stopsFromRoute);
     } catch (err) {

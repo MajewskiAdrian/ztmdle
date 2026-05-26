@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const useGameWinLogic = (currentStop, endStop, routeCount, onReplay) => {
+export const useGameWinLogic = (currentStop, endStop, routeCount, timeCount, onReplay) => {
   const [showWinMessage, setShowWinMessage] = useState(false);
 
   useEffect(() => {
@@ -37,6 +37,12 @@ export const useGameWinLogic = (currentStop, endStop, routeCount, onReplay) => {
             DO DOTARŁEŚ DO CELU!
           </h1>
           
+            <div className="flex flex-col items-center justify-center bg-panel2/50 border border-muted2/30 p-6">
+              <span className="font-bebas text-5xl text-amber">{timeCount} min</span>
+              <span className="font-share text-sm tracking-[0.4em] text-muted whitespace-nowrap">
+                CZAS
+              </span>
+            </div>
             <div className="flex flex-col items-center justify-center bg-panel2/50 border border-muted2/30 p-6">
               <span className="font-bebas text-5xl text-amber">{routeCount}</span>
               <span className="font-share text-sm tracking-[0.4em] text-muted whitespace-nowrap">
