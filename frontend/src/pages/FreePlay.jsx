@@ -20,10 +20,11 @@ export default function FreePlay({
   WinMessage,
 }) {
   return (
-    <div className="App min-h-screen h-full overflow-hidden">
+    <>
+    <Header />
+    <div className="App h-[calc(100vh-4rem)] w-full overflow-hidden relative bg-bg">
       <WinMessage />
-      <Header />
-      <div className="flex flex-col md:flex-row h-screen w-full min-h-0 overflow-hidden bg-bg items-stretch">
+      <div className="flex flex-col md:flex-row h-full w-full min-h-0 overflow-hidden bg-bg items-stretch">
         <aside className="flex flex-col flex-none md:w-96 w-full h-auto md:h-full gap-4 overflow-y-auto border-t md:border-t-0 md:border-l border-border bg-panel min-h-0">
           <StartEnd
             poczatkowy={poczatkowy}
@@ -58,5 +59,6 @@ export default function FreePlay({
 
       <button onClick={() => setCurrentStop(Koncowy)}>Test: Set to End Stop</button>
     </div>
+    </>
   );
 }

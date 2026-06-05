@@ -97,7 +97,6 @@ export default function Achievments() {
       </div>
       <div className="font-share text-s tracking-widest font-bold flex items-center gap-2 uppercase">
         <Link to="/" className="text-red hover:underline group">
-          <span className="inline-block transition-transform duration-200 group-hover:-translate-x-1.5 mr-1">←</span> 
           Powrót do startu
         </Link>
       </div>

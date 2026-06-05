@@ -2,68 +2,101 @@ import { Link } from 'react-router-dom'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-bg text-text flex flex-col items-center justify-center p-6 sm:p-12">
-      
-      <div className="max-w-3xl text-center mb-16">
-        <h1 className="text-6xl sm:text-7xl font-bebas mb-2">
-          WITAJ W ZTM<span className="text-red">DLE</span>
+    <div className="min-h-screen bg-bg text-text flex flex-col items-center justify-center gap-6 p-6 sm:p-12 font-sans selection:bg-red selection:text-white">
+      <div className="max-w-3xl text-center mb-2">
+        <h1 className="text-6xl sm:text-7xl font-bebas tracking-wide mb-3 uppercase">
+          WYBIERZ TRYB GRY
         </h1>
-        <p className="font-share text-s tracking-[0.2em] text-muted">
-          WYBIERZ TRYB GRY I ROZPOCZNIJ ROZGRYWKĘ
+        <p className="font-share text-base tracking-wider text-muted max-w-xl mx-auto leading-relaxed">
+          WYBIERZ TRYB I ROZPOCZNIJ ROZGRYWKE
         </p>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl w-full">
-        
         <Link
           to="/freeplay"
-          className="group relative flex flex-col justify-between border border-panel2 bg-panel p-10 h-120 transition-all duration-200 hover:border-red hover:-translate-y-1.5 rounded-sm overflow-hidden"
+          className="group relative flex flex-col justify-between border border-panel2 bg-panel p-10 pt-14 min-h-144 transition-all duration-200 hover:border-red/60 hover:-translate-y-1.5 rounded-sm overflow-hidden"
         >
-          <div className="absolute top-3 left-3 w-3 h-3 border-t border-l border-red opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-          <div className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-red opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>          
-          
+          <div className="absolute top-0 left-0 w-full h-2 bg-red"></div>
           <div>
-            <span className="font-share text-xs tracking-[2px] text-red font-bold block mb-1">
-              [ TRYB_01 ]
+            <span className="font-share text-xs tracking-[2px] text-red font-bold block uppercase">
+              TRYB KLASYCZNY
             </span>
-            <h2 className="font-bebas text-5xl tracking-wide mt-2 group-hover:text-red transition-colors duration-200">
-              FREEPLAY
+            <h2 className="font-bebas text-5xl sm:text-6xl tracking-wide mt-1 text-white group-hover:text-red transition-colors duration-200">
+              TRAVLE
             </h2>
-            <p className="font-share text-base text-muted leading-relaxed mt-5 pt-4 border-t border-panel2">
-              System losuje dla Ciebie przystanek startowy oraz cel podróży. Przemieszczaj się po sieci ZTM Gdańsk, przesiadaj na węzłach i optymalizuj trasę. Zegar tyka, im szybciej dotrzesz na miejsce, tym więcej punktów zdobędziesz!
+            <p className="font-share text-base text-muted/80 leading-relaxed mt-5">
+              Podróżuj siecią ZTM Gdańsk. Znajdź trasę od A do B. Im szybciej dotrzesz na miejsce, tym więcej punktów zdobywasz.
             </p>
+            <ul className="mt-10 space-y-3 font-share text-sm tracking-wide text-muted/60">
+              <li className="flex items-center gap-2.5">
+                <span className="w-2 h-2 rounded-full bg-red"></span> Dostępna lista przystnaków
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="w-2 h-2 rounded-full bg-red"></span> Nieograniczona ilość ruchów
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="w-2 h-2 rounded-full bg-red"></span> Punkty za szybkość
+              </li>
+            </ul>
           </div>
-          
-          <div className="font-share text-s tracking-widest text-text font-bold flex items-center gap-2 pt-4 mt-auto border-t border-panel2">
-            GRAJ <span className="text-red group-hover:translate-x-1.5 transition-transform duration-300">→</span>
+          <div className="mt-auto pt-6">
+            <div className="flex items-center gap-3 mb-6 font-share text-xs tracking-widest text-muted/40 uppercase">
+              <span>TRUDNOŚĆ</span>
+              <div className="h-1 flex-1 bg-panel2/60 relative overflow-hidden rounded-full">
+                <div className="absolute top-0 left-0 h-full w-0 bg-red/40 transition-all duration-500 ease-out group-hover:w-1/4 group-hover:bg-red"></div>
+              </div>
+            </div>
+            
+            <div className="w-full border-2 border-red bg-transparent text-red font-bebas text-3xl tracking-widest py-3.5 text-center transition-all duration-200 group-hover:bg-red group-hover:text-white">
+              ZAGRAJ
+            </div>
           </div>
         </Link>
 
         <Link
           to="/geoguessr"
-          className="group relative flex flex-col justify-between border border-panel2 bg-panel p-10 h-120 transition-all duration-200 hover:border-amber hover:-translate-y-1.5 rounded-sm overflow-hidden"
+          className="group relative flex flex-col justify-between border border-panel2 bg-panel p-10 pt-14 min-h-144 transition-all duration-200 hover:border-amber/60 hover:-translate-y-1.5 rounded-sm overflow-hidden"
         >
-          <div className="absolute top-3 left-3 w-3 h-3 border-t border-l border-amber opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-          <div className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-amber opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>          
+          <div className="absolute top-0 left-0 w-full h-2 bg-amber"></div>
           
           <div>
-            <span className="font-share text-xs tracking-[2px] text-amber font-bold block mb-1">
-              [ TRYB_02 ]
+            <span className="font-share text-xs tracking-[2px] text-amber font-bold block uppercase">
+              TRYB LOKALIZACJI
             </span>
-            <h2 className="font-bebas text-5xl tracking-wide mt-2 group-hover:text-amber transition-colors duration-200">
-              GEOGUESSR ZTM
+            <h2 className="font-bebas text-5xl sm:text-6xl tracking-wide mt-1 text-white group-hover:text-amber transition-colors duration-200">
+              GEOZTM
             </h2>
-            <p className="font-share text-base text-muted leading-relaxed mt-5 pt-4 border-t border-panel2">
-              Tu coś sięogarnie
+            <p className="font-share text-base text-muted/80 leading-relaxed mt-5">
+              Zaznacz na mapie wskazany przez nas przystanek. Im bliżej pinezki, tym więcej punktów zdobywasz.
             </p>
+            <ul className="mt-10 space-y-3 font-share text-sm tracking-wide text-muted/60">
+              <li className="flex items-center gap-2.5">
+                <span className="w-2 h-2 rounded-full bg-amber"></span> Zaznaczanie pinezką
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="w-2 h-2 rounded-full bg-amber"></span> Jeden ruch
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="w-2 h-2 rounded-full bg-amber"></span> Punkty za precyzję
+              </li>
+            </ul>
           </div>
-          
-          <div className="font-share text-s tracking-widest text-text font-bold flex items-center gap-2 pt-4 mt-auto border-t border-panel2">
-            GRAJ <span className="text-amber group-hover:translate-x-1.5 transition-transform duration-300">→</span>
+          <div className="mt-auto pt-6">
+            <div className="flex items-center gap-3 mb-6 font-share text-xs tracking-widest text-muted/40 uppercase">
+              <span>TRUDNOŚĆ</span>
+              <div className="h-1 flex-1 bg-panel2/60 relative overflow-hidden rounded-full">
+                <div className="absolute top-0 left-0 h-full w-0 bg-amber/40 transition-all duration-500 ease-out group-hover:w-2/4 group-hover:bg-amber"></div>
+              </div>
+            </div>
+            
+            <div className="w-full border-2 border-amber bg-transparent text-amber font-bebas text-3xl tracking-widest py-3.5 text-center transition-all duration-200 group-hover:bg-amber group-hover:text-black">
+              ZAGRAJ
+            </div>
           </div>
         </Link>
 
       </div>
+
     </div>
   )
 }
