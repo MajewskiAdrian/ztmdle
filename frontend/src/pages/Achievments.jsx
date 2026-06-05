@@ -51,52 +51,57 @@ export default function Achievments() {
   const isUnlocked = (id) => achievements.some((achievement) => achievement.id === id)
 
   return (
-    <div className="min-h-screen bg-bg text-text">
-      <div className="max-w-6xl mx-auto px-6 py-10">
-        <header className="mb-12 rounded-3xl border border-border bg-panel p-8 shadow-2xl">
-          <h1 className="text-4xl font-bold text-center mb-3">Achievements</h1>
-          <p className="text-center text-muted">
-            Tutaj pojawią się Twoje odblokowane osiągnięcia.
-          </p>
-        </header>
-
-        <main className="flex flex-col items-center gap-10">
-          <div className="grid w-full max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3">
-            {ACHIEVEMENT_DEFINITIONS.map((item) => {
-              const unlocked = isUnlocked(item.id)
-              return (
-                <div
-                  key={item.id}
-                  className={`h-40 rounded-3xl border p-6 flex flex-col items-center justify-center text-center shadow-lg ${
-                    unlocked ? 'border-amber bg-amber/10' : 'border-border bg-surface'
-                  }`}
-                >
-                  <span className="text-xl font-semibold">{item.title}</span>
-                  <span className={`text-sm mt-2 ${unlocked ? 'text-text' : 'text-muted'}`}>
-                    {unlocked ? item.description : item.lockedText}
-                  </span>
-                  {!unlocked && (
-                    <span className="text-xs uppercase tracking-[0.2em] text-muted mt-3">
-                      Odblokuj, aby zobaczyć więcej
-                    </span>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-
-          <div className="max-w-3xl rounded-3xl border border-border bg-panel p-6 text-center shadow-2xl">
-            <p className="text-lg font-medium">Sekret</p>
-            <p className="mt-3 text-muted">
-              Nikt nie wie jak go odblokować. Nawet twórcy.
-            </p>
-          </div>
-
-          <div className="text-center text-sm text-muted">
-            <Link to="/" className="text-red hover:underline">Powrót do startu</Link>
-          </div>
-        </main>
+    <div className="min-h-screen bg-bg text-text flex flex-col items-center justify-center p-6 sm:p-12">
+      
+      <div className="max-w-3xl text-center mb-16">
+        <h1 className="text-6xl sm:text-7xl font-bebas mb-2">
+          OSIĄGNIĘCIA
+        </h1>
+        <p className="font-share text-s tracking-wide text-muted uppercase">
+          TUTAJ POJAWIA SIE TWOJE OSIAGNIECIA
+        </p>
       </div>
+
+      <div className="grid w-full max-w-5xl grid-cols-1 gap-6 sm:grid-cols-3 mb-10">
+        {ACHIEVEMENT_DEFINITIONS.map((item) => {
+          const unlocked = isUnlocked(item.id)
+          return (
+            <div
+              key={item.id}
+              className={`group relative flex flex-col justify-between border p-8 h-72 rounded-sm overflow-hidden transition-all duration-200 ${
+                unlocked 
+                  ? 'border-amber bg-panel hover:-translate-y-1' 
+                  : 'border-panel2/40 bg-panel/40 opacity-70'
+              }`}
+            >
+
+              <div>
+                <h2 className={`font-bebas text-3xl tracking-wide mt-2 transition-colors duration-200 ${unlocked ? 'group-hover:text-amber' : 'text-muted/40'}`}>
+                  {item.title}
+                </h2>
+                <p className="font-share text-sm text-muted leading-relaxed mt-4 pt-3 border-t border-panel2">
+                  {unlocked ? item.description : item.lockedText}
+                </p>
+              </div>
+
+              <div className={`font-share text-xs tracking-widest font-bold pt-3 mt-auto border-t border-panel2 uppercase ${unlocked ? 'text-text' : 'text-muted/40'}`}>
+                {unlocked ? (
+                  <span className="text-amber">STATUS: ODBLOKOWANE</span>
+                ) : (
+                  <span>ZABLOKOWANE</span>
+                )}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+      <div className="font-share text-s tracking-widest font-bold flex items-center gap-2 uppercase">
+        <Link to="/" className="text-red hover:underline group">
+          <span className="inline-block transition-transform duration-200 group-hover:-translate-x-1.5 mr-1">←</span> 
+          Powrót do startu
+        </Link>
+      </div>
+
     </div>
   )
 }

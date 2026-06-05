@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-bg text-text flex flex-col items-center justify-center p-6 sm:p-12 selection:bg-red selection:text-white">
+    <div className="min-h-screen bg-bg text-text flex flex-col items-center justify-center p-6 sm:p-12">
       
       <div className="max-w-3xl text-center mb-16">
         <h1 className="text-6xl sm:text-7xl font-bebas mb-2">
@@ -17,7 +17,7 @@ export default function HomePage() {
         
         <Link
           to="/freeplay"
-          className="group relative flex flex-col justify-between border border-panel2 bg-panel p-10 h-[30rem] transition-all duration-200 hover:border-red hover:-translate-y-1.5 rounded-sm overflow-hidden"
+          className="group relative flex flex-col justify-between border border-panel2 bg-panel p-10 h-120 transition-all duration-200 hover:border-red hover:-translate-y-1.5 rounded-sm overflow-hidden"
         >
           <div className="absolute top-3 left-3 w-3 h-3 border-t border-l border-red opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
           <div className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-red opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>          
@@ -41,7 +41,7 @@ export default function HomePage() {
 
         <Link
           to="/geoguessr"
-          className="group relative flex flex-col justify-between border border-panel2 bg-panel p-10 h-[30rem] transition-all duration-200 hover:border-amber hover:-translate-y-1.5 rounded-sm overflow-hidden"
+          className="group relative flex flex-col justify-between border border-panel2 bg-panel p-10 h-120 transition-all duration-200 hover:border-amber hover:-translate-y-1.5 rounded-sm overflow-hidden"
         >
           <div className="absolute top-3 left-3 w-3 h-3 border-t border-l border-amber opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
           <div className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-amber opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>          
