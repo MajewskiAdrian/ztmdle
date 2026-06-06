@@ -1,20 +1,43 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MapContainer, TileLayer } from 'react-leaflet'; 
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet'; 
+import L from 'leaflet'; 
 import Header from '../components/Header/Header.jsx';
 import GeoAnwser from '../components/GeoAnwser/GeoAnwser.jsx';
 import { getStops } from '../api/getStops'; 
+
+// To jest ikonka pinezki jak coś
+const pinIcon = L.divIcon({
+  html: `
+    <div class="relative flex items-center justify-center">
+      <svg class="w-10 h-10 drop-shadow-[0_4px_5px_rgba(0,0,0,0.35)]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path 
+          d="M12 21.5C12 21.5 19 14.5 19 9.5C19 5.63401 15.866 2.5 12 2.5C8.13401 2.5 5 5.63401 5 9.5C5 14.5 12 21.5 12 21.5Z" 
+          fill="#f59e0b" 
+          stroke="white" 
+          stroke-width="2" 
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+  `,
+  className: 'custom-geoguessr-icon', 
+  iconSize: [40, 44],       
+  iconAnchor: [20, 42]
+});
 
 export default function SecondMode() {
   const positionCenter = [54.372, 18.62]; 
   
   const [currentStop, setCurrentStop] = useState(null);
+  const [markerPos, setMarkerPos] = useState(null);
 
   const handleFetchAndSelectStop = async () => {
     try {
       const data = await getStops();
       if (data && data.length > 0) {
         setCurrentStop(data[0]); 
+        setMarkerPos(null); 
       }
     } catch (err) {
       console.error("Błąd podczas pobierania przystanków:", err);
@@ -24,6 +47,17 @@ export default function SecondMode() {
   useEffect(() => {
     handleFetchAndSelectStop();
   }, []);
+
+  function MapClickHandler() {
+    useMapEvents({
+      click: (e) => {
+        const { lat, lng } = e.latlng;
+        setMarkerPos([lat, lng]);
+        console.log("Kliknięte współrzędne:", lat, lng);
+      },
+    });
+    return null;
+  }
 
   return (
     <>
@@ -66,9 +100,19 @@ export default function SecondMode() {
                 className="h-full w-full"
               >
                 <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />           
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                  url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+                />      
+
+                <MapClickHandler />
+
+                {markerPos && (
+                  <Marker 
+                    position={markerPos} 
+                    icon={pinIcon} 
+                  />
+                )}
+                   
               </MapContainer>
             </div>
             
