@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-bg text-text flex flex-col items-center justify-center gap-6 p-6 sm:p-12 font-sans selection:bg-red selection:text-white">
+    <div className="min-h-screen bg-bg text-text flex flex-col items-center justify-center gap-6 p-6 sm:p-12 font-sans">
       <div className="max-w-3xl text-center mb-2">
         <h1 className="text-6xl sm:text-7xl font-bebas tracking-wide mb-3 uppercase">
           WYBIERZ TRYB GRY
@@ -18,7 +18,7 @@ export default function HomePage() {
         >
           <div className="absolute top-0 left-0 w-full h-2 bg-red"></div>
           <div>
-            <span className="font-share text-xs tracking-[2px] text-red font-bold block uppercase">
+            <span className="font-share text-xs tracking-[2px] text-red font-bold block">
               TRYB KLASYCZNY
             </span>
             <h2 className="font-bebas text-5xl sm:text-6xl tracking-wide mt-1 text-white group-hover:text-red transition-colors duration-200">
@@ -40,7 +40,7 @@ export default function HomePage() {
             </ul>
           </div>
           <div className="mt-auto pt-6">
-            <div className="flex items-center gap-3 mb-6 font-share text-xs tracking-widest text-muted/40 uppercase">
+            <div className="flex items-center gap-3 mb-6 font-share text-xs tracking-widest text-muted/40">
               <span>TRUDNOŚĆ</span>
               <div className="h-1 flex-1 bg-panel2/60 relative overflow-hidden rounded-full">
                 <div className="absolute top-0 left-0 h-full w-0 bg-red/40 transition-all duration-500 ease-out group-hover:w-1/4 group-hover:bg-red"></div>
@@ -54,13 +54,13 @@ export default function HomePage() {
         </Link>
 
         <Link
-          to="/geoguessr"
+          to="/second-mode"
           className="group relative flex flex-col justify-between border border-panel2 bg-panel p-10 pt-14 min-h-144 transition-all duration-200 hover:border-amber/60 hover:-translate-y-1.5 rounded-sm overflow-hidden"
         >
           <div className="absolute top-0 left-0 w-full h-2 bg-amber"></div>
           
           <div>
-            <span className="font-share text-xs tracking-[2px] text-amber font-bold block uppercase">
+            <span className="font-share text-xs tracking-[2px] text-amber font-bold block">
               TRYB LOKALIZACJI
             </span>
             <h2 className="font-bebas text-5xl sm:text-6xl tracking-wide mt-1 text-white group-hover:text-amber transition-colors duration-200">
@@ -82,7 +82,7 @@ export default function HomePage() {
             </ul>
           </div>
           <div className="mt-auto pt-6">
-            <div className="flex items-center gap-3 mb-6 font-share text-xs tracking-widest text-muted/40 uppercase">
+            <div className="flex items-center gap-3 mb-6 font-share text-xs tracking-widest text-muted/40">
               <span>TRUDNOŚĆ</span>
               <div className="h-1 flex-1 bg-panel2/60 relative overflow-hidden rounded-full">
                 <div className="absolute top-0 left-0 h-full w-0 bg-amber/40 transition-all duration-500 ease-out group-hover:w-2/4 group-hover:bg-amber"></div>

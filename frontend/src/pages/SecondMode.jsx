@@ -1,18 +1,25 @@
 import { Link } from 'react-router-dom';
+import Header from '../components/Header/Header.jsx';
+import MainMap from '../components/mainMap/mainMap.jsx';
+import AnwserBox from '../components/anwserBox/anwserBox.jsx';
+import StartEnd from '../components/startEnd/startEnd.jsx';
+import CurrentStopContainer from '../components/CurrentStopContainer.jsx';
 
 export default function SecondMode() {
   return (
-    <div className="min-h-screen bg-bg text-text p-8">
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold">Second Mode</h1>
-        <p className="mt-2 text-muted">To jest osobna strona w aplikacji z routingiem.</p>
-      </header>
-      <main className="space-y-4">
-        <p>Możesz tu dodać dowolną treść, ustawienia, instrukcje lub inne widgety.</p>
-        <Link to="/" className="inline-block rounded-md bg-red px-4 py-2 text-white hover:bg-red/90">
-          Wróć do HomePage
-        </Link>
-      </main>
+    <>
+    <Header />
+   <div className="App h-[calc(100vh-4rem)] w-full overflow-hidden relative bg-bg">
+         <div className="flex flex-col md:flex-row h-full w-full min-h-0 overflow-hidden bg-bg items-stretch">
+           <aside className="flex flex-col flex-none md:w-96 w-full h-auto md:h-full gap-4 overflow-y-auto border-t md:border-t-0 md:border-l border-border bg-panel min-h-0">
+             <p className='text-red'>BOK</p>
+           </aside>
+   
+           <main className="flex-1 min-w-0 h-auto md:h-full min-h-0 relative">
+            <p className='text-red'>ŚRODEK</p>
+           </main>
+         </div>
     </div>
+    </>
   );
 }
