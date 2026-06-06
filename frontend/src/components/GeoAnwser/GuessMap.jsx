@@ -1,0 +1,37 @@
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import { pinIcon } from './mapIcons'; 
+
+function MapClickHandler({ onMapClick }) {
+  useMapEvents({
+    click: (e) => {
+      const { lat, lng } = e.latlng;
+      onMapClick(lat, lng);
+    },
+  });
+  return null;
+}
+
+export default function GuessMap({ positionCenter, markerPos, onMapClick }) {
+  return (
+    <div className="MainMap h-full w-full">
+      <MapContainer 
+        center={positionCenter} 
+        zoom={11} 
+        scrollWheelZoom={true}
+        className="h-full w-full"
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+        />      
+
+        <MapClickHandler onMapClick={onMapClick} />
+
+        {markerPos && (
+          <Marker position={markerPos} icon={pinIcon} />
+        )}
+           
+      </MapContainer>
+    </div>
+  );
+}
