@@ -25,7 +25,7 @@ export default function FreePlay({
     <div className="App h-[calc(100vh-4rem)] w-full overflow-hidden relative bg-bg">
       <WinMessage />
       <div className="flex flex-col md:flex-row h-full w-full min-h-0 overflow-hidden bg-bg items-stretch">
-        <aside className="flex flex-col flex-none md:w-96 w-full h-auto md:h-full gap-4 overflow-y-auto border-t md:border-t-0 md:border-l border-border bg-panel min-h-0">
+        <aside className="flex flex-col flex-none md:w-120 w-full h-auto md:h-full gap-4 overflow-y-auto border-t md:border-t-0 md:border-l border-border bg-panel min-h-0">
           <StartEnd
             poczatkowy={poczatkowy}
             onStartSet={setPoczatkowy}
