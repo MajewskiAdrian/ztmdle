@@ -1,5 +1,5 @@
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
-import { pinIcon } from './mapIcons'; 
+import { pinIcon, correctStopIcon } from './mapIcons';
 
 function MapClickHandler({ onMapClick }) {
   useMapEvents({
@@ -11,7 +11,7 @@ function MapClickHandler({ onMapClick }) {
   return null;
 }
 
-export default function GuessMap({ positionCenter, markerPos, onMapClick }) {
+export default function GuessMap({ positionCenter, markerPos, correctStopPos, onMapClick }) {
   return (
     <div className="MainMap h-full w-full">
       <MapContainer 
@@ -29,6 +29,10 @@ export default function GuessMap({ positionCenter, markerPos, onMapClick }) {
 
         {markerPos && (
           <Marker position={markerPos} icon={pinIcon} />
+        )}
+        
+        {correctStopPos && (
+          <Marker position={correctStopPos} icon={correctStopIcon} />
         )}
            
       </MapContainer>

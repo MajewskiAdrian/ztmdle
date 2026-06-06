@@ -1,13 +1,19 @@
 import { useState, useEffect } from 'react';
 import Header from '../components/Header/Header.jsx';
 import GuessMap from '../components/GeoAnwser/GuessMap.jsx'; 
+import GameSidebar from '../components/GeoAnwser/GameSidebar.jsx'; 
 import { getStops } from '../api/getStops'; 
+import L from 'leaflet';
 
 export default function SecondMode() {
   const positionCenter = [54.372, 18.62]; 
   
   const [currentStop, setCurrentStop] = useState(null);
   const [markerPos, setMarkerPos] = useState(null);
+  const [correctStopPos, setCorrectStopPos] = useState(null);
+  
+  const [distance, setDistance] = useState(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const fetchAndSelectStop = async () => {
     try {
@@ -15,6 +21,9 @@ export default function SecondMode() {
       if (data && data.length > 0) {
         setCurrentStop(data[0]); 
         setMarkerPos(null); 
+        setCorrectStopPos(null);
+        setDistance(null);       
+        setIsSubmitted(false);   
       }
     } catch (err) {
       console.error("Błąd podczas pobierania przystanków:", err);
@@ -26,8 +35,30 @@ export default function SecondMode() {
   }, []);
 
   const mapClick = (lat, lng) => {
+    if (isSubmitted) return;
     setMarkerPos([lat, lng]);
-    console.log("Współrzędne w SecondMode:", lat, lng);
+  };
+
+  const checkGuess = () => {
+    if (!markerPos || !currentStop) return;
+
+    try {
+      const stopLatLng = L.latLng(currentStop.stopLat, currentStop.stopLon);
+      const guessLatLng = L.latLng(markerPos[0], markerPos[1]);
+
+      const distanceInMeters = stopLatLng.distanceTo(guessLatLng);
+      
+      setDistance(distanceInMeters);
+      setCorrectStopPos([currentStop.stopLat, currentStop.stopLon]);
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Błąd podczas obliczania odległości:", error);
+    }
+  };
+
+  const formatDistance = (meters) => {
+    if (meters < 1000) return `${Math.round(meters)} m`;
+    return `${(meters / 1000).toFixed(2)} km`;
   };
 
   return (
@@ -36,29 +67,21 @@ export default function SecondMode() {
       <div className="h-[calc(100vh-4rem)] w-full">
         <div className="flex flex-col md:flex-row h-full w-full min-h-0 bg-bg">
           
-          <aside className="flex flex-col md:w-120 w-full h-auto md:h-full gap-4 border-t md:border-t-0 md:border-l border-border bg-panel min-h-0 justify-between">
-              <div className="w-full py-8 bg-panel2 border border-muted2 p-4">
-                  <div className="flex flex-col">
-                    <span className="font-share text-xsm tracking-widest text-red pb-1.5 uppercase">
-                      Znajdz przystanek
-                    </span>
-                    <span className="font-bebas text-5xl tracking-wide text-text uppercase">
-                      {currentStop ? currentStop.stopName : "Ładowanie..."}
-                    </span>
-                  </div>
-            </div>
-
-            <div className="p-4 border-t border-muted2 bg-panel2/40 w-full">
-              <button onClick={fetchAndSelectStop} className="w-full bg-red hover:bg-red/90 text-text font-bebas text-2xl tracking-widest py-3.5 text-center cursor-pointer">
-                Zatwierdź
-              </button>
-            </div>
-          </aside>
+          <GameSidebar 
+            currentStop={currentStop}
+            distance={distance}
+            isSubmitted={isSubmitted}
+            markerPos={markerPos}
+            onCheckGuess={checkGuess}
+            onNextRound={fetchAndSelectStop}
+            formatDistance={formatDistance}
+          />
    
           <main className="flex-1 h-auto md:h-full relative">
             <GuessMap 
               positionCenter={positionCenter} 
               markerPos={markerPos} 
+              correctStopPos={correctStopPos} 
               onMapClick={mapClick} 
             />
           </main>
