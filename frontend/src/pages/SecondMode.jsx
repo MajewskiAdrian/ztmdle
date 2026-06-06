@@ -1,11 +1,30 @@
-import { useState } from 'react'; // ZMIANA: Dodany useState do obsługi znikania
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MapContainer, TileLayer } from 'react-leaflet'; 
 import Header from '../components/Header/Header.jsx';
 import GeoAnwser from '../components/GeoAnwser/GeoAnwser.jsx';
+import { getStops } from '../api/getStops'; 
 
 export default function SecondMode() {
   const positionCenter = [54.372, 18.62]; 
+  
+  const [currentStop, setCurrentStop] = useState(null);
+
+  const handleFetchAndSelectStop = async () => {
+    try {
+      const data = await getStops();
+      if (data && data.length > 0) {
+        setCurrentStop(data[0]); 
+      }
+    } catch (err) {
+      console.error("Błąd podczas pobierania przystanków:", err);
+    }
+  };
+
+  useEffect(() => {
+    handleFetchAndSelectStop();
+  }, []);
+
   return (
     <>
       <Header />
@@ -21,17 +40,16 @@ export default function SecondMode() {
                                 Znajdz przystanek
                             </span>
                             <span className="font-bebas text-5xl tracking-wide text-text uppercase">
-                                Siedlce(testowy)
+                                {currentStop ? currentStop.stopName : "Ładowanie..."}
                             </span>
                         </div>
                     </div>
               </div>
-
               <GeoAnwser />
             </div>
 
             <div className="p-4 border-t border-muted2 bg-panel2/40 w-full">
-              <button className="w-full bg-red hover:bg-red/90 text-text font-bebas text-2xl tracking-widest py-3.5 text-center cursor-pointer">
+              <button onClick={handleFetchAndSelectStop} className="w-full bg-red hover:bg-red/90 text-text font-bebas text-2xl tracking-widest py-3.5 text-center cursor-pointer">
                 Zatwierdź
               </button>
             </div>
@@ -53,6 +71,7 @@ export default function SecondMode() {
                 />           
               </MapContainer>
             </div>
+            
           </main>
         </div>
       </div>
