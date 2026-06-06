@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './index.css'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import HomePage from './pages/HomePage.jsx'
@@ -62,6 +62,7 @@ function App() {
   const [achievementPopup, setAchievementPopup] = useState(null)
   const [showWinMessage, setShowWinMessage, WinMessage] = useGameWinLogic(currentStop, Koncowy, routeCount, timeCount, clearGameCookie)
   const [stopsList, setStopsList] = useState([])
+  const skipSaveRef = useRef(false)
 
   const unlockAchievement = (achievement) => {
     setAchievements((prev) => [...prev, achievement])
@@ -80,6 +81,10 @@ function App() {
   }, [poczatkowy, currentStop, Koncowy, routeCount, timeCount])
 
   useEffect(() => {
+    if (skipSaveRef.current) {
+      skipSaveRef.current = false
+      return
+    }
     saveAchievements(achievements)
   }, [achievements])
 
@@ -90,6 +95,18 @@ function App() {
       setAchievementPopup(null)
     }, 5000)
     return () => clearTimeout(timeout)
+  }, [achievementPopup])
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    if (achievementPopup) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = previousOverflow
+    }
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
   }, [achievementPopup])
 
   useEffect(() => {
@@ -132,11 +149,34 @@ function App() {
     })
   }, [currentStop, achievements])
 
+  useEffect(() => {
+    const handleTestAchievement = () => {
+      document.cookie = `${ACHIEVEMENT_COOKIE_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax`
+      skipSaveRef.current = true
+      setAchievements([])
+
+      const achievement = {
+        id: 1,
+        title: 'Ah ****, Here we go again',
+        description: 'Dojechałeś do szkoły. Robota czeka.',
+      }
+
+      const alreadyUnlocked = achievements.some((a) => a.id === 1)
+      if (!alreadyUnlocked) {
+        setAchievements((prev) => [...prev, achievement])
+      }
+      setAchievementPopup(achievement)
+    }
+
+    window.addEventListener('test-achievement', handleTestAchievement)
+    return () => window.removeEventListener('test-achievement', handleTestAchievement)
+  }, [achievements])
+
   return (
     <>
       {achievementPopup && (
-        <div className="overlay flex items-center justify-center px-4 py-6">
-          <div className="win-message max-w-md w-full rounded-3xl border border-border bg-panel p-6 text-center shadow-2xl">
+        <div className="fixed inset-0 flex items-center justify-center px-4 py-6 bg-black/50" style={{ zIndex: 1102 }}>
+          <div className="win-message max-w-md w-full rounded-3xl border border-border bg-panel p-6 text-center shadow-2xl animate-pop-in">
             <p className="text-sm uppercase tracking-[0.3em] text-muted mb-3">Osiągnięcie odblokowane!</p>
             <h2 className="text-2xl font-bold mb-2">{achievementPopup.title}</h2>
             <p className="text-text text-base mb-6">{achievementPopup.description}</p>

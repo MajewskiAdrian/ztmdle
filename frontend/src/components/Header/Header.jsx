@@ -20,10 +20,17 @@ export default function Header() {
       </div>
 
       <nav className="ml-auto flex gap-3 text-sm">
-        <Link to="/achievements" className="rounded px-3 py-2 text-text hover:bg-white/10">
+        <Link to="/achievements" className="rounded px-3 py-2 text-text hover:bg-white/10 cursor-pointer">
           Achievements
         </Link>
-        <Link to="/" className="rounded px-3 py-2 text-text hover:bg-white/10">
+        <button
+          type="button"
+          onClick={() => window.dispatchEvent(new Event('test-achievement'))}
+          className="rounded px-3 py-2 text-text hover:bg-white/10 cursor-pointer"
+        >
+          Test-achievemnt
+        </button>
+        <Link to="/" className="rounded px-3 py-2 text-text hover:bg-white/10 cursor-pointer">
           Start
         </Link>
         <Link to="/profile" className="rounded bg-red px-3 py-2 text-white hover:bg-red/90">
