@@ -3,14 +3,10 @@ import { useState, useEffect } from 'react'
 import { getStopsFromRoute, getRoutesFromStop } from '../../api/getStops';
 
 
-export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, setRouteCount, timeCount, setTimeCount, stopsList, setStopsList }) {
+export default function AnwserBox({ startStop, onCommitMove, stopsList, setStopsList }) {
     const [routesList, setRoutesList] = useState([]);
-    //const [stopsList, setStopsList] = useState([]);
     const [selectedRoute, setSelectedRoute] = useState(null);
     const [selectedStop, setSelectedStop] = useState(null);
-    const [stopSequenceInRoute, setStopSequenceInRoute] = useState(null);
-
-    const [dropdownOpen, setDropdownOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -57,7 +53,6 @@ export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, set
                 );
 
                 setStopsList(availableStops);
-                setStopSequenceInRoute(currentSequence);
                 setSelectedStop(availableStops[1] || null);
             } catch (e) {
                 console.error("Błąd przystanków trasy:", e.message);
@@ -65,6 +60,21 @@ export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, set
         };
         fetchStops();
     }, [selectedRoute, startStop]);
+
+    const formatRouteLabel = (routeId) => {
+        const routeText = routeId.toString();
+
+        if (routeText.startsWith('40')) {
+            return `N${routeText.substring(2)}`;
+        }
+
+        if (routeText.startsWith('4') && routeText.length > 1) {
+            return `N${routeText.substring(1)}`;
+        }
+
+        return routeText;
+    }
+
     if (!startStop || loading) return <div className="p-4 font-share text-xs animate-pulse text-amber">Ładowanie linii...</div>;
     if (error) return <div className="AnwserBox"><p>Błąd: {error}</p></div>;
 
@@ -127,10 +137,17 @@ export default function AnwserBox({ startStop, onSetCurrentStop, routeCount, set
                             
                             <button
                                 onClick={() => {
-                                    if (selectedStop && onSetCurrentStop) {
-                                        onSetCurrentStop(selectedStop);
-                                        setRouteCount(routeCount + 1);
-                                        setTimeCount(prev => prev + (((new Date(selectedStop.arrivalTime)) - new Date(stopsList[0].arrivalTime)))/60000)
+                                    if (selectedStop && onCommitMove) {
+                                        const deltaTime = ((new Date(selectedStop.arrivalTime)) - new Date(stopsList[0].arrivalTime)) / 60000;
+
+                                        onCommitMove({
+                                            fromStop: startStop,
+                                            toStop: selectedStop,
+                                            routeId: selectedRoute.routeId,
+                                            tripId: selectedRoute.tripId,
+                                            routeLabel: formatRouteLabel(selectedRoute.routeId),
+                                            deltaTime,
+                                        });
                                         setSelectedRoute(null);
                                     }
                                 }}

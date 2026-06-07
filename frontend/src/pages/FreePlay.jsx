@@ -11,10 +11,13 @@ export default function FreePlay({
   setCurrentStop,
   Koncowy,
   setKoncowy,
-  routeCount,
-  setRouteCount,
   timeCount,
-  setTimeCount,
+  moveHistory,
+  historyModalOpen,
+  setHistoryModalOpen,
+  onUndoLastMove,
+  onJumpToHistoryStep,
+  onCommitMove,
   stopsList,
   setStopsList,
   WinMessage,
@@ -38,10 +41,7 @@ export default function FreePlay({
           <AnwserBox
             startStop={currentStop}
             onSetCurrentStop={setCurrentStop}
-            routeCount={routeCount}
-            setRouteCount={setRouteCount}
-            timeCount={timeCount}
-            setTimeCount={setTimeCount}
+            onCommitMove={onCommitMove}
             stopsList={stopsList}
             setStopsList={setStopsList}
           />
@@ -53,6 +53,13 @@ export default function FreePlay({
             startStop={poczatkowy}
             endStop={Koncowy}
             stopsList={stopsList}
+            timeCount={timeCount}
+            moveHistory={moveHistory}
+            historyModalOpen={historyModalOpen}
+            onOpenHistory={() => setHistoryModalOpen(true)}
+            onCloseHistory={() => setHistoryModalOpen(false)}
+            onUndoLastMove={onUndoLastMove}
+            onJumpToHistoryStep={onJumpToHistoryStep}
           />
         </main>
       </div>

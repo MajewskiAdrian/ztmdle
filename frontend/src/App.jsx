@@ -58,11 +58,49 @@ function App() {
   const [Koncowy, setKoncowy] = useState(savedGame?.Koncowy ?? null)
   const [routeCount, setRouteCount] = useState(savedGame?.routeCount ?? 0)
   const [timeCount, setTimeCount] = useState(savedGame?.timeCount ?? 0)
+  const [moveHistory, setMoveHistory] = useState(savedGame?.moveHistory ?? [])
+  const [historyModalOpen, setHistoryModalOpen] = useState(false)
   const [achievements, setAchievements] = useState(readAchievements())
   const [achievementPopup, setAchievementPopup] = useState(null)
   const [showWinMessage, setShowWinMessage, WinMessage] = useGameWinLogic(currentStop, Koncowy, routeCount, timeCount, clearGameCookie)
   const [stopsList, setStopsList] = useState([])
   const skipSaveRef = useRef(false)
+
+  const applyHistoryState = (nextHistory) => {
+    const lastMove = nextHistory[nextHistory.length - 1] || null
+    setMoveHistory(nextHistory)
+    setRouteCount(nextHistory.length)
+    setTimeCount(nextHistory.reduce((total, move) => total + move.deltaTime, 0))
+    setCurrentStop(lastMove ? lastMove.toStop : poczatkowy ?? null)
+  }
+
+  const handleCommitMove = ({ fromStop, toStop, routeId, tripId, routeLabel, deltaTime }) => {
+    setCurrentStop(toStop)
+    setRouteCount((prevCount) => prevCount + 1)
+    setTimeCount((prevTime) => prevTime + deltaTime)
+    setMoveHistory((prevHistory) => [
+      ...prevHistory,
+      {
+        step: prevHistory.length + 1,
+        fromStop,
+        toStop,
+        routeId,
+        tripId,
+        routeLabel,
+        deltaTime,
+      },
+    ])
+  }
+
+  const handleUndoLastMove = () => {
+    const nextHistory = moveHistory.slice(0, -1)
+    applyHistoryState(nextHistory)
+  }
+
+  const handleJumpToHistoryStep = (stepIndex) => {
+    const nextHistory = moveHistory.slice(0, stepIndex)
+    applyHistoryState(nextHistory)
+  }
 
   const unlockAchievement = (achievement) => {
     setAchievements((prev) => [...prev, achievement])
@@ -75,10 +113,11 @@ function App() {
       currentStop,
       Koncowy,
       routeCount,
-      timeCount
+      timeCount,
+      moveHistory,
     }
     setCookie(COOKIE_NAME, JSON.stringify(gameData), 30)
-  }, [poczatkowy, currentStop, Koncowy, routeCount, timeCount])
+  }, [poczatkowy, currentStop, Koncowy, routeCount, timeCount, moveHistory])
 
   useEffect(() => {
     if (skipSaveRef.current) {
@@ -221,6 +260,12 @@ function App() {
               setRouteCount={setRouteCount}
               timeCount={timeCount}
               setTimeCount={setTimeCount}
+                moveHistory={moveHistory}
+                historyModalOpen={historyModalOpen}
+                setHistoryModalOpen={setHistoryModalOpen}
+                onUndoLastMove={handleUndoLastMove}
+                onJumpToHistoryStep={handleJumpToHistoryStep}
+                onCommitMove={handleCommitMove}
               stopsList={stopsList}
               setStopsList={setStopsList}
               WinMessage={WinMessage}
