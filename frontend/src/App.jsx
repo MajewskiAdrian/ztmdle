@@ -175,20 +175,35 @@ function App() {
   return (
     <>
       {achievementPopup && (
-        <div className="fixed inset-0 flex items-center justify-center px-4 py-6 bg-black/50" style={{ zIndex: 1102 }}>
-          <div className="win-message max-w-md w-full rounded-3xl border border-border bg-panel p-6 text-center shadow-2xl animate-pop-in">
-            <p className="text-sm uppercase tracking-[0.3em] text-muted mb-3">Osiągnięcie odblokowane!</p>
-            <h2 className="text-2xl font-bold mb-2">{achievementPopup.title}</h2>
-            <p className="text-text text-base mb-6">{achievementPopup.description}</p>
-            <button
-              onClick={() => setAchievementPopup(null)}
-              className="rounded-full border border-red bg-red px-5 py-2 text-sm font-semibold text-white hover:bg-red/90"
-            >
-              Zamknij
-            </button>
-          </div>
-        </div>
-      )}
+  <>
+    <div className="fixed inset-0 bg-bg/80 animate-fade-in" style={{ zIndex: 1111 }}></div>
+        <div 
+      className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-panel p-8 text-center border-2 border-amber rounded-sm animate-pop-in"
+      style={{ zIndex: 1112 }}
+    >
+      <p className="font-share text-xsm tracking-[0.3em] text-amber mb-4">
+        OSIĄGNIĘCIE ODBLOKOWANE!
+      </p>
+      
+      <h2 className="font-bebas text-4xl text-text tracking-wide uppercase mb-3">
+        {achievementPopup.title}
+      </h2>
+      
+      <div className="bg-panel2/60 border border-amber/30 p-5 mb-6 rounded-sm">
+        <p className="font-share text-base text-text">
+          {achievementPopup.description}
+        </p>
+      </div>
+
+      <button
+        onClick={() => setAchievementPopup(null)}
+        className="w-full bg-amber hover:bg-amber2 text-bg font-bebas text-2xl py-3 tracking-widest flex items-center justify-center cursor-pointer rounded-sm"
+      >
+        ZAMKNIJ
+      </button>
+    </div>
+  </>
+)}
 
       <Routes>
         <Route path="/" element={<HomePage />} />
