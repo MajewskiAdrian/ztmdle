@@ -1,5 +1,6 @@
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import { pinIcon, correctStopIcon } from './mapIcons';
+import GuessBoundsController from './GuessBoundsController';
 
 function MapClickHandler({ onMapClick }) {
   useMapEvents({
@@ -26,6 +27,12 @@ export default function GuessMap({ positionCenter, markerPos, correctStopPos, on
         />      
 
         <MapClickHandler onMapClick={onMapClick} />
+        
+        <GuessBoundsController 
+          markerPos={markerPos} 
+          correctStopPos={correctStopPos} 
+          positionCenter={positionCenter} 
+        />
 
         {markerPos && (
           <Marker position={markerPos} icon={pinIcon} />
