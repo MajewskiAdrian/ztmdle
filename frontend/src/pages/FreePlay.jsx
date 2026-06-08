@@ -3,6 +3,7 @@ import MainMap from '../components/mainMap/mainMap.jsx';
 import AnwserBox from '../components/anwserBox/anwserBox.jsx';
 import StartEnd from '../components/startEnd/startEnd.jsx';
 import CurrentStopContainer from '../components/CurrentStopContainer.jsx';
+import { useEffect } from 'react';
 
 export default function FreePlay({
   poczatkowy,
@@ -22,6 +23,10 @@ export default function FreePlay({
   setStopsList,
   WinMessage,
 }) {
+  useEffect(() => {
+    setStopsList([])
+  }, [currentStop, setStopsList])
+
   return (
     <>
     <Header />

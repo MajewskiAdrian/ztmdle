@@ -27,7 +27,7 @@ export default function CurrentStopContainer({ currentStop, setCurrentStop }) {
           onClick={() => setShowChanges(!showChanges)}
           className="bg-amber hover:bg-amber2 text-bg font-bebas text-lg px-5 py-1 rounded-sm "
         >
-          {showChanges ? 'Cofnij' : 'Zmień'}
+          {showChanges ? 'Zamknij' : 'Zmień'}
         </button>
       </div>
 
