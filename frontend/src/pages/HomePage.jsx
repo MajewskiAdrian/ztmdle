@@ -22,7 +22,7 @@ export default function HomePage() {
               TRYB KLASYCZNY
             </span>
             <h2 className="font-bebas text-5xl sm:text-6xl tracking-wide mt-1 text-white group-hover:text-red transition-colors duration-200">
-              TRAVLE
+              ZTMDLE
             </h2>
             <p className="font-share text-base text-muted/80 leading-relaxed mt-5">
               Podróżuj siecią ZTM Gdańsk. Znajdź trasę od A do B. Im szybciej dotrzesz na miejsce, tym więcej punktów zdobywasz.
