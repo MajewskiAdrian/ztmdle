@@ -2,7 +2,7 @@
 import './anwserBox.css'
 import { useState, useEffect } from 'react'
 import { getStopsFromRoute, getRoutesFromStop } from '../../api/getStops';
-
+//komponent do wyboru linii i przystanku docelowego. Pobiera z API dostępne linie z aktualnego przystanku.
 export default function AnwserBox({ startStop, onCommitMove, stopsList, setStopsList }) {
     const [routesList, setRoutesList] = useState([]);
     const [selectedRoute, setSelectedRoute] = useState(null);

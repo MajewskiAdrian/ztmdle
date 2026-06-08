@@ -1,5 +1,5 @@
 import React from 'react'
-
+//komponent który wyswietla popupy z achievemntami.
 export default function AchievementPopup({ popupData, onClose }) {
   if (!popupData) return null
 
