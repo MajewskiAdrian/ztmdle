@@ -30,7 +30,7 @@ const availableDot = L.divIcon({
   iconSize: [14, 14], 
   iconAnchor: [8, 8] 
 });
-
+// Główny komponent mapy, wyświetlający aktualny przystanek, startowy, końcowy oraz dostępne przystanki na trasie. Najważniejszy komponent wizualny gry.
 export default function MainMap({
     currentStop,
     startStop,

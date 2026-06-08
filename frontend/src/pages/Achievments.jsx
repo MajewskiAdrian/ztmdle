@@ -1,14 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { getCookie } from '../utils/cookieHelpers'
 
 const ACHIEVEMENT_COOKIE_NAME = 'ztmdleAchievements'
-
-function getCookie(name) {
-  const value = `; ${document.cookie}`
-  const parts = value.split(`; ${name}=`)
-  if (parts.length === 2) return parts.pop().split(';').shift()
-  return null
-}
 
 function readAchievements() {
   const raw = getCookie(ACHIEVEMENT_COOKIE_NAME)
@@ -95,6 +89,7 @@ export default function Achievments() {
           )
         })}
       </div>
+      
       <div className="font-share text-s tracking-widest font-bold flex items-center gap-2 uppercase">
         <Link to="/" className="text-red hover:underline group">
           Powrót do startu
