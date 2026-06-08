@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import { pinIcon, correctStopIcon } from './mapIcons';
 import GuessBoundsController from './GuessBoundsController';
-
+// Komponent mapy do zgadywania lokalizacji przystanku.
 function MapClickHandler({ onMapClick }) {
   useMapEvents({
     click: (e) => {

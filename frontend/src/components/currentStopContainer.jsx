@@ -1,6 +1,8 @@
 import { useState } from "react";
 import ChangeStop from "./ChangeStop";
 
+
+// Komponent do zmiany aktualnego przystanku. 
 export default function CurrentStopContainer({ currentStop, setCurrentStop }) {
   const [showChanges, setShowChanges] = useState(false);
 

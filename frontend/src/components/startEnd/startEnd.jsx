@@ -9,6 +9,7 @@ export default function StartEnd({ poczatkowy, onStartSet, currentStop, onCurren
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
+    // logika do pobierania przystanków i ustawiania początkowego i końcowego.
     useEffect(() => {
         getStops()
             .then((data) => {

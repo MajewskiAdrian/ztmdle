@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+// Komponent do histori tras i cofania.
 export default function RouteHistoryModal({ open, moveHistory, onClose, onJumpToStep }) {
   const [pendingStep, setPendingStep] = useState(null)
 
