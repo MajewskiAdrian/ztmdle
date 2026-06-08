@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { getCookie, setCookie } from '../utils/cookieHelpers'
 
 const ACHIEVEMENT_COOKIE_NAME = 'ztmdleAchievements'
-
+//hook odpowiedzialny za zarządzanie osiągnięciami, ich odblokowywanie, zapisywanie do ciasteczka oraz wyświetlanie popupu z informacją o odblokowaniu osiągnięcia.
 function readAchievements() {
   const raw = getCookie(ACHIEVEMENT_COOKIE_NAME)
   if (!raw) return []

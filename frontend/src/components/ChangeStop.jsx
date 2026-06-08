@@ -1,6 +1,6 @@
 import { use, useEffect, useState } from "react"
 import { getStopsFromStop } from "../api/getStops";
-
+//komponent odpowiedzialny za wyświetlanie możliwych zmian przystanku, pobieranie ich z API oraz obsługę błędów i ładowania.
 export default function ChangeStop({ currentStop, setCurrentStop }) {
     const [avaliableStops, setAvaliableStops] = useState([])
     const [loading, setLoading] = useState(true)

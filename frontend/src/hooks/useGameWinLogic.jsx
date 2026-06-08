@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 export const useGameWinLogic = (currentStop, endStop, routeCount, timeCount, onReplay) => {
   const [showWinMessage, setShowWinMessage] = useState(false);
-
+//hook odpowiedzialny za logikę wyświetlania komunikatu o wygranej
   useEffect(() => {
     const currentId = currentStop?.stopId
     const endId = endStop?.stopId
@@ -13,7 +13,7 @@ export const useGameWinLogic = (currentStop, endStop, routeCount, timeCount, onR
       setShowWinMessage(false);
     }
   }, [currentStop, endStop]);
-
+//Zagraj ponownie
   const handleReplay = () => {
     setShowWinMessage(false)
     if (onReplay) {

@@ -12,7 +12,8 @@ import { useAchievements } from './hooks/useAchievements.jsx'
 import { getCookie, setCookie } from './utils/cookieHelpers'
 
 const COOKIE_NAME = 'ztmdleGame'
-
+//komponent zarządzający stanem gry, trasami, czasem, historią ruchów oraz integrujący logikę wygranej i osiągnięć.
+//zapis i odczyt ciasteczek
 function readSavedGame() {
   const raw = getCookie(COOKIE_NAME)
   if (!raw) return null
@@ -22,11 +23,11 @@ function readSavedGame() {
     return null
   }
 }
-
+//kompnent czysczacy ciasteczka.
 function clearGameCookie() {
   document.cookie = `${COOKIE_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax`
 }
-
+//Wszystkie potrzebne stany gry.
 function App() {
   const savedGame = readSavedGame()
   const [poczatkowy, setPoczatkowy] = useState(savedGame?.poczatkowy ?? null)
@@ -40,9 +41,9 @@ function App() {
 
   const [showWinMessage, setShowWinMessage, WinMessage] = useGameWinLogic(currentStop, Koncowy, routeCount, timeCount, clearGameCookie)
   
-  // Customowy hook obsługujący kompletną logikę osiągnięć
+  // hook obsługujący kompletną logikę osiągnięć
   const { achievementPopup, setAchievementPopup } = useAchievements(currentStop, timeCount)
-
+// Funkcje do obsługi historii ruchów, cofania i skakania do konkretnego kroku w historii.
   const applyHistoryState = (nextHistory) => {
     const lastMove = nextHistory[nextHistory.length - 1] || null
     setMoveHistory(nextHistory)
@@ -50,7 +51,7 @@ function App() {
     setTimeCount(nextHistory.reduce((total, move) => total + move.deltaTime, 0))
     setCurrentStop(lastMove ? lastMove.toStop : poczatkowy ?? null)
   }
-
+// Funkcja do zatwierdzania ruchu, aktualizująca aktualny przystanek, licznik tras, czas oraz historię ruchów.
   const handleCommitMove = ({ fromStop, toStop, routeId, tripId, routeLabel, deltaTime }) => {
     setCurrentStop(toStop)
     setRouteCount((prevCount) => prevCount + 1)
