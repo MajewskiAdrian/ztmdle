@@ -21,7 +21,7 @@ export default function Header() {
 
       <nav className="ml-auto flex gap-3 text-sm">
         <Link to="/achievements" className="rounded px-3 py-2 text-text hover:bg-white/10 cursor-pointer">
-          Achievements
+          Osiągnięcia
         </Link>
         <Link to="/" className="rounded bg-red px-3 py-2 text-white hover:bg-red/90">
           Start

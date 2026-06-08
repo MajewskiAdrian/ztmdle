@@ -1,4 +1,40 @@
-# ZTMDLE - Dokumentacja Funkcji
+# ZTMDLE - Dokumentacja Projektu
+
+
+## Technologie
+### Frontend
+* **Framework:** React.js (z React Router)
+* **Mapy:** React-Leaflet (Leaflet.js)
+* **Stylizacja:** Tailwind CSS
+
+### Backend
+* **Środowisko:** Node.js
+* **Framework API:** Express.js
+* **Baza danych:** SQLite3
+
+## Struktura Komponentów
+
+### Komponenty
+* **`Header`**: Nagłówek aplikacji z nawigacją i logo.
+* **`AchievementPopup`**: Informacja o odblokowaniu osiągnięcia.
+* **`GameScoreBox`**: Komponent liczący czas przejazdu do przystanku końcowego.
+* **`RouteHistoryBox`**, **`RouteHistoryModal`**: Komponenty obsługujące historię trasy.
+* **`AnwserBox`**: Komponent wyboru trasy.
+* **`CurrentStopContainer`**: Panel informujący aktualnego przystanku.
+* **`ChangeStop`**: Komponent służący do zmiany przystanku na przeciwny do aktualnego (np. Siedlce 01 na Sieldce 02).
+* **`StartEnd`**: Komponent wypisujacy i defniujący punkt startowy i końcowy.
+* **`MainMap`**: Mapa trybu ZTMDLE.
+* **`GuessMap`**: Mapa trybu GEOZTM.
+* **`MapBoundsController`**: Automatyczne kadrowanie mapy MainMap.
+* **`GuessBoundsController`**: Automatyczne kadrowanie mapy GuessMap.
+* **`useAchievements`**: Zarządzanie osiągnięciami i ich zapisem w ciasteczkach.
+* **`useGameWinLogic`**: Weryfikacja warunków zwycięstwa w trybie ZTMDLE.
+
+### Strony
+* **`HomePage`**: Wybór trybu gry.
+* **`FreePlay`**: Tryb ZTMDLE.
+* **`SecondMode`**: Tryb GEOZTM.
+* **`Achievments`**: Galeria osiągnięć użytkownika.
 
 ## Backend - API Routes (port 3000)
 
@@ -20,40 +56,14 @@
 
 ---
 
-## Frontend - Komponenty
-
-### `App.jsx`
-- Główny komponent zarządzający stanem aplikacji
-- Trzyma `poczatkowy` (początkowy przystankek) i `currentStop` (bieżący przystanek)
-- Rozpowszechnia stan do `StartEnd` i `AnwserBox`
-
-### `Header`
-- Nagłówek aplikacji
-
-### `StartEnd`
-- Wyświetla początkowy i końcowy przystanek
-- Pokazuje bieżący przystanek (zmienia się po wyborze w `AnwserBox`)
-- Pobiera dane przystanków z API przy załadowaniu
-
-### `MainMap`
-- Mapa lub wizualizacja trasy
-
-### `AnwserBox`
-- Custom dropdown do wyboru przystanku docelowego
-- Lista pokazuje przystanki dostępne z **bieżącego** przystanku
-- Przycisk `Ok` zmienia bieżący przystanek na wybrany
-- Lista odświeża się po każdym wyborze
-
----
-
-## Przepływ Danych
-
-1. Załadowanie: `StartEnd` pobiera 2 losowe przystanki
-2. Pierwszy przystanek to startowy i bieżący
-3. Użytkownik klika dropdown w `AnwserBox`
-4. Lista pokazuje przystanki dostępne z bieżącego przystanku
-5. Po wyborze i kliknięciu `Ok`:
-   - Bieżący przystanek zmienia się na wybrany
-   - `StartEnd` odświeża wyświetlanie
-   - `AnwserBox` pobiera nową listę dostępnych przystanków
-
+## Instalacja i uruchomienie
+1. **Sklonowanie repozytorium:** `git clone https://github.com/MajewskiAdrian/ztmdle.git`
+   `cd ztmdle`
+2. **Przygotowanie backendu:** `cd backend`
+   `npm install` 
+3. **Uruchomienie serwera API:** `node src/server.js` 
+   *(Zostaw to okno terminala otwarte)*
+4. **Przygotowanie frontendu:** *(Otwórz nowe okno terminala)*
+   `cd frontend`
+   `npm install`
+5. **Uruchomienie aplikacji:** `npm run dev`
