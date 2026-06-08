@@ -4,7 +4,6 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import HomePage from './pages/HomePage.jsx'
 import FreePlay from './pages/FreePlay.jsx'
 import SecondMode from './pages/SecondMode.jsx'
-import Profile from './pages/Profile.jsx'
 import Achievments from './pages/Achievments.jsx'
 import AchievementPopup from './components/AchievementPopup.jsx'
 import { useGameWinLogic } from './hooks/useGameWinLogic.jsx'
@@ -126,7 +125,6 @@ function App() {
             />
           }
         />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/second-mode" element={<SecondMode />} />
         <Route path="/achievements" element={<Achievments />} />
         <Route path="*" element={<Navigate to="/" replace />} />
