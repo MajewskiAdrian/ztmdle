@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getCookie } from '../utils/cookieHelpers'
-
+//Strona Achievemntów.
 const ACHIEVEMENT_COOKIE_NAME = 'ztmdleAchievements'
 
 function readAchievements() {

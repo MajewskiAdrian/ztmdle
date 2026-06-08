@@ -4,7 +4,7 @@ import GuessMap from '../components/GeoAnwser/GuessMap.jsx';
 import GameSidebar from '../components/GeoAnwser/GameSidebar.jsx'; 
 import { getStops } from '../api/getStops'; 
 import L from 'leaflet';
-
+//Strona drugiego trybu.
 export default function SecondMode() {
   const positionCenter = [54.372, 18.62]; 
   
