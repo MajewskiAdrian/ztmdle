@@ -51,10 +51,7 @@ export default function RouteHistoryModal({ open, moveHistory, onClose, onJumpTo
                     }`}
                   >
                     <div className="flex items-start gap-4">
-                      <div className="flex flex-col items-center pt-1">
-                        <span className={`h-3 w-3 rounded-full ${isLast ? 'bg-amber' : 'bg-muted2'}`}></span>
-                        <span className="mt-1 h-full min-h-10 w-px bg-border2"></span>
-                      </div>
+                      
 
                       <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -62,6 +59,11 @@ export default function RouteHistoryModal({ open, moveHistory, onClose, onJumpTo
                             <p className="font-share text-[10px] tracking-[0.35em] text-muted">KROK {index + 1}</p>
                             <p className="mt-1 font-bebas text-2xl tracking-wide text-text">{move.routeLabel}</p>
                           </div>
+                          <div className="mt-3 flex flex-wrap items-center gap-2 text-sm leading-snug text-text/85">
+                          <span className="rounded-full border border-border2 bg-bg px-3 py-1 font-medium tracking-normal">{move.fromStop?.stopName || 'Start'}</span>
+                          <span className="text-muted"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m560-240-56-58 142-142H160v-80h486L504-662l56-58 240 240-240 240Z"/></svg></span>
+                          <span className="rounded-full border border-border2 bg-bg px-3 py-1 font-medium tracking-normal">{move.toStop?.stopName || 'Cel'}</span>
+                        </div>
 
                           <div className="rounded-sm border border-border2 bg-bg px-3 py-2 text-right">
                             <p className="font-share text-[9px] tracking-[0.35em] text-muted">+CZAS</p>
@@ -69,11 +71,7 @@ export default function RouteHistoryModal({ open, moveHistory, onClose, onJumpTo
                           </div>
                         </div>
 
-                        <div className="mt-3 flex flex-wrap items-center gap-2 text-sm leading-snug text-text/85">
-                          <span className="rounded-full border border-border2 bg-bg px-3 py-1 font-medium tracking-normal">{move.fromStop?.stopName || 'Start'}</span>
-                          <span className="text-muted">→</span>
-                          <span className="rounded-full border border-border2 bg-bg px-3 py-1 font-medium tracking-normal">{move.toStop?.stopName || 'Cel'}</span>
-                        </div>
+                        
                       </div>
                     </div>
                   </button>
@@ -87,7 +85,7 @@ export default function RouteHistoryModal({ open, moveHistory, onClose, onJumpTo
           <div className="absolute inset-0 z-1300 flex items-center justify-center bg-bg/75 p-4">
             <div className="animate-modal-pop-soft w-full max-w-md rounded-sm border border-border bg-panel p-5 text-center shadow-2xl shadow-black/70">
               <p className="font-share text-[11px] tracking-[0.35em] text-muted">POTWIERDZENIE</p>
-              <h3 className="mt-2 font-bebas text-4xl tracking-wide text-amber">Cofnąć do poprzedniego przystanku?</h3>
+              <h3 className="mt-2 font-bebas text-4xl tracking-wide text-amber"> {pendingStep.index === 0 ? "Usunąć wszystkie ruchy?" : `Usunąć ${pendingStep.index + 1} ruch?`}</h3>
               <p className="mt-3 text-sm leading-snug text-text/80">
                 Wrócisz do <span className="font-medium text-text">{pendingStep.move.fromStop?.stopName || 'startu'}</span> i usuniesz późniejsze ruchy z historii.
               </p>
@@ -103,7 +101,7 @@ export default function RouteHistoryModal({ open, moveHistory, onClose, onJumpTo
                   onClick={confirmJump}
                   className="rounded-sm bg-amber px-4 py-3 font-bebas text-lg tracking-widest text-bg transition-colors hover:bg-amber2"
                 >
-                  COFNIJ SIĘ
+                  USUŃ
                 </button>
               </div>
             </div>

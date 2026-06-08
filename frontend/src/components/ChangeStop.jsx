@@ -56,9 +56,9 @@ export default function ChangeStop({ currentStop, setCurrentStop }) {
                         <button
                             key={stop.stopId}
                             onClick={() => setCurrentStop(stop)}
-                            className="relative flex h-24 flex-col items-center justify-center border border-panel2 bg-panel2 hover:bg-white/5 text-text transition-all p-2"
+                            className="relative flex min-h-24 h-auto flex-col items-center justify-center border border-panel2 bg-panel2 hover:bg-white/5 text-text transition-all p-2"
                         >
-                            <span className="font-bebas text-sm text-center line-clamp-2 pr-1 pl-1">
+                            <span className="font-bebas text-sm text-center pr-1 pl-1">
                                 {stop.stopName} {stop.stopCode}
                             </span>
                             <div className="text-lg mt-1">

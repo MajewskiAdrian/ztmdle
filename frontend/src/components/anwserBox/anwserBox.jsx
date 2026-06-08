@@ -228,7 +228,7 @@ export default function AnwserBox({
                                 </button>
 
                                 {dropdownOpen && stopsList.length > 0 && (
-                                    <ul className="absolute left-0 right-0 z-50 mt-1 max-h-60 overflow-y-auto bg-panel border border-muted2 rounded-sm shadow-xl custom-scrollbar">
+                                    <ul className="absolute left-0 right-0 z-50 mt-0 max-h-96 overflow-y-auto bg-panel border border-muted2 rounded-sm rounded-t-none shadow-xl custom-scrollbar">
                                         {stopsList.map((stop, index) => {
                                             if (index > 0 && stopsList[0]) {
                                                 const minutesDiff = Math.round(
@@ -246,7 +246,7 @@ export default function AnwserBox({
                                                             setSelectedStop(stop);
                                                             setDropdownOpen(false);
                                                         }}
-                                                        className={`p-4 font-bebas text-xl cursor-pointer uppercase transition-colors border-b border-panel2/30 last:border-0 flex justify-between items-center
+                                                        className={`p-4 h-11 font-bebas text-xl cursor-pointer uppercase transition-colors border-b border-panel2/30 last:border-0 flex justify-between items-center
                                                             ${isCurrentSelected ? "bg-amber/20 text-amber" : "text-text hover:bg-white/5"}`}
                                                     >
                                                         <span className="truncate pr-4">
@@ -254,7 +254,7 @@ export default function AnwserBox({
                                                         </span>
 
                                                         <span
-                                                            className={`shrink-0 bg-panel2 p-2 rounded ${isCurrentSelected ? "text-amber" : "text-text"}`}
+                                                            className={`shrink-0 bg-panel2 p-0.5 px-3 rounded ${isCurrentSelected ? "text-amber" : "text-text"}`}
                                                         >
                                                             +{minutesDiff} MIN
                                                         </span>
