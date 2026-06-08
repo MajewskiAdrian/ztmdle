@@ -1,71 +1,99 @@
-// Komponent do wyboru linii i przystanku docelowego.
-import './anwserBox.css'
-import { useState, useEffect } from 'react'
-import { getStopsFromRoute, getRoutesFromStop } from '../../api/getStops';
-//komponent do wyboru linii i przystanku docelowego. Pobiera z API dostępne linie z aktualnego przystanku.
-export default function AnwserBox({ startStop, onCommitMove, stopsList, setStopsList }) {
+import "./anwserBox.css";
+import { useState, useEffect } from "react";
+import { getStopsFromRoute, getRoutesFromStop } from "../../api/getStops";
+
+export default function AnwserBox({
+    startStop,
+    onCommitMove,
+    stopsList,
+    setStopsList,
+}) {
     const [routesList, setRoutesList] = useState([]);
     const [selectedRoute, setSelectedRoute] = useState(null);
     const [selectedStop, setSelectedStop] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-    const [dropdownOpen, setDropdownOpen] = useState(false)
+    const [error, setError] = useState("");
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     useEffect(() => {
         if (!startStop) return;
 
+        let cancelled = false;
+
+        setLoading(true);
+        setError("");
+        setRoutesList([]);
+        setSelectedRoute(null);
+        setSelectedStop(null);
+        setDropdownOpen(false);
+        setStopsList([]);
+
         const fetchRoutes = async () => {
-            setLoading(true);
-            setError('');
             try {
                 const routes = await getRoutesFromStop(startStop.stopId);
+                if (cancelled) return;
 
                 const routesWithStopsCheck = await Promise.all(
                     routes.map(async (route) => {
                         try {
-                            const stops = await getStopsFromRoute(route.routeId, route.tripId);
-
-                            const currentStopInRoute = stops.find(s => s.stopId == startStop.stopId);
-                            const currentSequence = currentStopInRoute ? Number(currentStopInRoute.stopSequence) : null;
-
-                            const availableStops = stops.filter(
-                                (stop) => currentSequence == null || Number(stop.stopSequence) >= currentSequence
+                            const stops = await getStopsFromRoute(
+                                route.routeId,
+                                route.tripId,
                             );
 
-                            // Zwraca trasę tylko jeśli ma więcej niż 1 przystanek
+                            const currentStopInRoute = stops.find(
+                                (s) => s.stopId == startStop.stopId,
+                            );
+                            const currentSequence = currentStopInRoute
+                                ? Number(currentStopInRoute.stopSequence)
+                                : null;
+
+                            const availableStops = stops.filter(
+                                (stop) =>
+                                    currentSequence == null ||
+                                    Number(stop.stopSequence) >= currentSequence,
+                            );
+
                             return availableStops.length > 1 ? route : null;
                         } catch (e) {
-                            console.error(`Błąd sprawdzania trasy ${route.routeId}:`, e);
                             return null;
                         }
-                    })
+                    }),
                 );
 
-                const validRoutes = routesWithStopsCheck.filter(route => route !== null);
-
-                setRoutesList(validRoutes);
-                setStopsList([]);
-                setSelectedRoute(null);
+                if (!cancelled) {
+                    setRoutesList(routesWithStopsCheck.filter(Boolean));
+                }
             } catch (e) {
-                setError("Błąd tras: " + e.message);
+                if (!cancelled) setError("Błąd tras: " + e.message);
             } finally {
-                setLoading(false);
+                if (!cancelled) setLoading(false);
             }
         };
+
         fetchRoutes();
-    }, [startStop]);
+
+        return () => {
+            cancelled = true;
+        };
+    }, [startStop, setStopsList]);
 
     useEffect(() => {
-        if (!selectedRoute) return;
+        if (!selectedRoute || !startStop) return;
+
+        let cancelled = false;
 
         const fetchStops = async () => {
             try {
-                const stops = await getStopsFromRoute(selectedRoute.routeId, selectedRoute.tripId);
+                const stops = await getStopsFromRoute(
+                    selectedRoute.routeId,
+                    selectedRoute.tripId,
+                );
+                if (cancelled) return;
 
                 const currentStopInRoute = stops.find(
-                    (stop) => stop.stopId == startStop.stopId
+                    (stop) => stop.stopId == startStop.stopId,
                 );
-
                 const currentSequence = currentStopInRoute
                     ? Number(currentStopInRoute.stopSequence)
                     : null;
@@ -73,33 +101,43 @@ export default function AnwserBox({ startStop, onCommitMove, stopsList, setStops
                 const availableStops = stops.filter(
                     (stop) =>
                         currentSequence == null ||
-                        Number(stop.stopSequence) >= currentSequence
+                        Number(stop.stopSequence) >= currentSequence,
                 );
 
                 setStopsList(availableStops);
                 setSelectedStop(availableStops[1] || null);
             } catch (e) {
-                console.error("Błąd przystanków trasy:", e.message);
+                if (!cancelled) console.error("Błąd przystanków trasy:", e.message);
             }
         };
+
         fetchStops();
-    }, [selectedRoute, startStop]);
+
+        return () => {
+            cancelled = true;
+        };
+    }, [selectedRoute, startStop, setStopsList]);
 
     const formatRouteLabel = (routeId) => {
         const routeText = routeId.toString();
 
-        if (routeText.startsWith('40')) {
+        if (routeText.startsWith("40")) {
             return `N${routeText.substring(2)}`;
         }
 
-        if (routeText.startsWith('4') && routeText.length > 1) {
+        if (routeText.startsWith("4") && routeText.length > 1) {
             return `N${routeText.substring(1)}`;
         }
 
         return routeText;
-    }
+    };
 
-    if (error) return <div className="AnwserBox"><p>Błąd: {error}</p></div>;
+    if (error)
+        return (
+            <div className="AnwserBox">
+                <p>Błąd: {error}</p>
+            </div>
+        );
     if (!startStop) return null;
 
     return (
@@ -111,34 +149,37 @@ export default function AnwserBox({ startStop, onCommitMove, stopsList, setStops
                 <div className="h-0.5 flex-1 bg-panel2"></div>
             </div>
 
-
             <div className="grid grid-cols-4 gap-2">
-                {loading ? (
-                    Array.from({ length: 4 }).map((_, i) => (
-                        <div 
-                            key={i} 
+                {loading
+                    ? Array.from({ length: 4 }).map((_, i) => (
+                        <div
+                            key={i}
                             className="h-24 bg-panel2/50 border border-panel2 rounded-sm animate-pulse flex items-center justify-center"
                         >
                             <div className="h-7 w-12 bg-muted2/20 rounded-xs"></div>
                         </div>
                     ))
-                ) : (
-                    routesList.map((route, index) => {
-                        const isActive = selectedRoute?.routeId === route.routeId && selectedRoute?.tripId === route.tripId;
+                    : routesList.map((route, index) => {
+                        const isActive =
+                            selectedRoute?.routeId === route.routeId &&
+                            selectedRoute?.tripId === route.tripId;
                         return (
                             <button
                                 key={index}
                                 onClick={() => setSelectedRoute(route)}
-                                className={`relative flex h-24 flex-col items-center justify-center border border-panel2 transition-all ${isActive ? 'bg-amber2/10 text-bg' : 'bg-panel2 hover:bg-white/5 text-text'}`}
+                                className={`relative flex h-24 flex-col items-center justify-center border border-panel2 transition-all ${isActive ? "bg-amber2/10 text-bg" : "bg-panel2 hover:bg-white/5 text-text"}`}
                             >
-                                <span className={`font-bebas text-3xl ${isActive ? 'text-amber' : 'text-text'}`}>
+                                <span
+                                    className={`font-bebas text-3xl ${isActive ? "text-amber" : "text-text"}`}
+                                >
                                     {formatRouteLabel(route.routeId)}
                                 </span>
-                                <div className={`absolute bottom-0 h-1 w-full ${isActive ? 'bg-amber' : 'bg-muted2/40'}`}></div>
+                                <div
+                                    className={`absolute bottom-0 h-1 w-full ${isActive ? "bg-amber" : "bg-muted2/40"}`}
+                                ></div>
                             </button>
                         );
-                    })
-                )}
+                    })}
             </div>
 
             {selectedRoute && (
@@ -153,30 +194,37 @@ export default function AnwserBox({ startStop, onCommitMove, stopsList, setStops
                     <div className="pb-8">
                         <div className="flex flex-col bg-panel2 border border-muted2 rounded-sm relative">
                             <div className="relative w-full">
-
                                 <button
                                     type="button"
-                                    onClick={() => stopsList.length > 0 && setDropdownOpen(!dropdownOpen)}
+                                    onClick={() =>
+                                        stopsList.length > 0 && setDropdownOpen(!dropdownOpen)
+                                    }
                                     className="w-full bg-panel2 p-4 text-text font-bebas text-xl outline-none cursor-pointer uppercase flex items-center justify-between text-left gap-4"
                                 >
                                     <div className="flex flex-1 justify-between items-center min-w-0">
                                         {selectedStop && stopsList[0] ? (
                                             <>
                                                 <span className="truncate pr-4">
-                                                    {selectedStop.stopName} {selectedStop.stopCode || ''}
+                                                    {selectedStop.stopName} {selectedStop.stopCode || ""}
                                                 </span>
                                                 <span className="text-amber shrink-0">
-                                                    +{Math.round((new Date(selectedStop.arrivalTime) - new Date(stopsList[0].arrivalTime)) / 60000)} MIN
+                                                    +
+                                                    {Math.round(
+                                                        (new Date(selectedStop.arrivalTime) -
+                                                            new Date(stopsList[0].arrivalTime)) /
+                                                        60000,
+                                                    )}{" "}
+                                                    MIN
                                                 </span>
                                             </>
                                         ) : (
-                                            <span className="text-muted">
-                                                Wybierz przystanek...
-                                            </span>
+                                            <span className="text-muted">Wybierz przystanek...</span>
                                         )}
                                     </div>
 
-                                    <span className="text-xs text-muted shrink-0 select-none">▼</span>
+                                    <span className="text-xs text-muted shrink-0 select-none">
+                                        ▼
+                                    </span>
                                 </button>
 
                                 {dropdownOpen && stopsList.length > 0 && (
@@ -184,9 +232,12 @@ export default function AnwserBox({ startStop, onCommitMove, stopsList, setStops
                                         {stopsList.map((stop, index) => {
                                             if (index > 0 && stopsList[0]) {
                                                 const minutesDiff = Math.round(
-                                                    (new Date(stop.arrivalTime) - new Date(stopsList[0].arrivalTime)) / 60000
+                                                    (new Date(stop.arrivalTime) -
+                                                        new Date(stopsList[0].arrivalTime)) /
+                                                    60000,
                                                 );
-                                                const isCurrentSelected = selectedStop?.stopId === stop.stopId;
+                                                const isCurrentSelected =
+                                                    selectedStop?.stopId === stop.stopId;
 
                                                 return (
                                                     <li
@@ -196,13 +247,15 @@ export default function AnwserBox({ startStop, onCommitMove, stopsList, setStops
                                                             setDropdownOpen(false);
                                                         }}
                                                         className={`p-4 font-bebas text-xl cursor-pointer uppercase transition-colors border-b border-panel2/30 last:border-0 flex justify-between items-center
-                                                            ${isCurrentSelected ? 'bg-amber/20 text-amber' : 'text-text hover:bg-white/5'}`}
+                                                            ${isCurrentSelected ? "bg-amber/20 text-amber" : "text-text hover:bg-white/5"}`}
                                                     >
                                                         <span className="truncate pr-4">
-                                                            {stop.stopName} {stop.stopCode || ''}
+                                                            {stop.stopName} {stop.stopCode || ""}
                                                         </span>
 
-                                                        <span className={`shrink-0 font-bold ${isCurrentSelected ? 'text-amber' : 'text-text'}`}>
+                                                        <span
+                                                            className={`shrink-0 bg-panel2 p-2 rounded ${isCurrentSelected ? "text-amber" : "text-text"}`}
+                                                        >
                                                             +{minutesDiff} MIN
                                                         </span>
                                                     </li>
@@ -217,7 +270,10 @@ export default function AnwserBox({ startStop, onCommitMove, stopsList, setStops
                             <button
                                 onClick={() => {
                                     if (selectedStop && onCommitMove && stopsList[0]) {
-                                        const deltaTime = (new Date(selectedStop.arrivalTime) - new Date(stopsList[0].arrivalTime)) / 60000;
+                                        const deltaTime =
+                                            (new Date(selectedStop.arrivalTime) -
+                                                new Date(stopsList[0].arrivalTime)) /
+                                            60000;
                                         onCommitMove({
                                             fromStop: startStop,
                                             toStop: selectedStop,
@@ -234,7 +290,6 @@ export default function AnwserBox({ startStop, onCommitMove, stopsList, setStops
                             >
                                 JEDŹ
                             </button>
-
                         </div>
                     </div>
                 </div>
