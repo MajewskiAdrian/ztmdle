@@ -85,7 +85,7 @@ export default function RouteHistoryModal({ open, moveHistory, onClose, onJumpTo
           <div className="absolute inset-0 z-1300 flex items-center justify-center bg-bg/75 p-4">
             <div className="animate-modal-pop-soft w-full max-w-md rounded-sm border border-border bg-panel p-5 text-center shadow-2xl shadow-black/70">
               <p className="font-share text-[11px] tracking-[0.35em] text-muted">POTWIERDZENIE</p>
-              <h3 className="mt-2 font-bebas text-4xl tracking-wide text-amber"> {pendingStep.index === 0 ? "Usunąć wszystkie ruchy?" : `Usunąć ${pendingStep.index + 1} ruch?`}</h3>
+              <h3 className="mt-2 font-bebas text-4xl tracking-wide text-amber"> {pendingStep.index === 0 ? "Usunąć wszystkie ruchy?" : `Wrócić do ${pendingStep.index} ruchu?`}</h3>
               <p className="mt-3 text-sm leading-snug text-text/80">
                 Wrócisz do <span className="font-medium text-text">{pendingStep.move.fromStop?.stopName || 'startu'}</span> i usuniesz późniejsze ruchy z historii.
               </p>
@@ -101,7 +101,7 @@ export default function RouteHistoryModal({ open, moveHistory, onClose, onJumpTo
                   onClick={confirmJump}
                   className="rounded-sm bg-amber px-4 py-3 font-bebas text-lg tracking-widest text-bg transition-colors hover:bg-amber2"
                 >
-                  USUŃ
+                  WRÓĆ
                 </button>
               </div>
             </div>
